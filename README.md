@@ -34,68 +34,66 @@ a pull request. The book is at the following location on github:
   962 056 0998. (See the Piazza announcement for the passcode.)
 
 
-* Office hours:
+**Office hours** with Jeremy Siek (jsiek): TBD
 
-    Jeremy Siek (jsiek): TBD
+**Topics:**
 
-* Topics:
+* Instruction Selection
 
-    * Instruction Selection
-    
-    * Register Allocation
-    
-    * Static type checking
-    
-    * Conditional control flow
-    
-    * Mutable data
-    
-    * Garbage collection
-    
-    * Procedures and calling conventions
-    
-    * First-class functions and closure conversion
-    
-    * Dynamic typing
-    
-    * Generics
-    
-    * High-level optimization (inlining, constant folding, copy
-      propagation, etc.)
+* Register Allocation
 
-* Grading:
+* Static type checking
 
-    Course grades are based on the following items. For the weighting, see
-    the Canvas panel on the right-hand side of this web page.
+* Conditional control flow
 
-    * Participation
-        * Class attendance
-        * Piazza questions and answers
-        * Office hours attendance
-    * Assignments
-    * Midterm Exam (in class)
-    * Final Exam
+* Mutable data
 
-* Assignments:
+* Garbage collection
 
-    Organize into teams of 2-4 students. Assignments will be due bi-weekly
-    on Mondays at 11:59pm. Teams that include one or more graduate
-    students are required to complete the challenge exercises. Turn in
-    your assignments by creating a github repository and giving access to
-    Jeremy. Assignments will be graded based on how many test cases they
-    pass. The test suite used for grading will be made available on Sunday
-    night, one day prior to the due date. The testing will be done on the
-    silo machine (linux). The testing will include both new tests and all
-    of the tests from prior assignments. Assignments may be turned in up
-    to one week late with a penalty of one letter grade. Students are
-    responsible for understanding the entire assignment and all of the
-    code that their team produces. The midterm and final exam are designed
-    to test a student's understanding of the assignments. The Final
-    Project is due Dec. 4 and may be turned in late up to Dec. 11.
+* Procedures and calling conventions
 
-* Email Discussion Group: on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
+* First-class functions and closure conversion
 
-Resources:
+* Dynamic typing
+
+* Generics
+
+* High-level optimization (inlining, constant folding, copy
+  propagation, etc.)
+
+**Grading:**
+
+Course grades are based on the following items. For the weighting, see
+the Canvas panel on the right-hand side of this web page.
+
+* Participation
+    * Class attendance
+    * Piazza questions and answers
+    * Office hours attendance
+* Assignments
+* Midterm Exam (in class)
+* Final Exam
+
+**Assignments:*
+
+Organize into teams of 2-4 students. Assignments will be due bi-weekly
+on Mondays at 11:59pm. Teams that include one or more graduate
+students are required to complete the challenge exercises. Turn in
+your assignments by creating a github repository and giving access to
+Jeremy. Assignments will be graded based on how many test cases they
+pass. The test suite used for grading will be made available on Sunday
+night, one day prior to the due date. The testing will be done on the
+silo machine (linux). The testing will include both new tests and all
+of the tests from prior assignments. Assignments may be turned in up
+to one week late with a penalty of one letter grade. Students are
+responsible for understanding the entire assignment and all of the
+code that their team produces. The midterm and final exam are designed
+to test a student's understanding of the assignments. The Final
+Project is due Dec. 4 and may be turned in late up to Dec. 11.
+
+**Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
+
+**Resources:**
 
 * [Racket](https://download.racket-lang.org/)
 * [Racket Documentation](https://docs.racket-lang.org/)
