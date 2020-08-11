@@ -18,11 +18,11 @@ the Racket language. The very first subset is a tiny language of
 integer arithmetic, and by the time we are done the language includes
 first-class functions.
 
-*Prerequisites:* B521 or C311. Fluency in Racket is highly recommended
+**Prerequisites:** B521 or C311. Fluency in Racket is highly recommended
 as students will do a lot of programming in Racket. Prior knowledge of
 an assembly language helps, but is not required.
 
-*Textbook:* The notes for the course are available
+**Textbook:** The notes for the course are available
 [here](https://www.dropbox.com/s/ktdw8j0adcc44r0/book.pdf?dl=1). If
 you have suggestions for improvement, please either send an email to
 Jeremy or, even better, make edits to a branch of the book and perform
@@ -30,7 +30,7 @@ a pull request. The book is at the following location on github:
 
     https://github.com/IUCompilerCourse/Essentials-of-Compilation
 
-*Lecture:* Tuesday and Thursday, 3:15pm to 4:30pm, on Zoom Meeting ID
+**Lecture:** Tuesday and Thursday, 3:15pm to 4:30pm, on Zoom Meeting ID
   962 056 0998. (See the Piazza announcement for the passcode.)
 
 
