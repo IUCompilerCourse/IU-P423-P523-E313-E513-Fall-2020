@@ -74,7 +74,7 @@ the Canvas panel on the right-hand side of this web page.
 * Midterm Exam (in class)
 * Final Exam
 
-**Assignments:*
+**Assignments:**
 
 Organize into teams of 2-4 students. Assignments will be due bi-weekly
 on Mondays at 11:59pm. Teams that include one or more graduate
