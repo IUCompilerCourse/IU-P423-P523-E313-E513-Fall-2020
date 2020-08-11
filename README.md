@@ -78,30 +78,30 @@ a pull request. The book is at the following location on github:
 
 * Assignments:
 
-Organize into teams of 2-4 students. Assignments will be due bi-weekly
-on Mondays at 11:59pm. Teams that include one or more graduate
-students are required to complete the challenge exercises. Turn in
-your assignments by creating a github repository and giving access to
-Jeremy. Assignments will be graded based on how many test cases they
-pass. The test suite used for grading will be made available on Sunday
-night, one day prior to the due date. The testing will be done on the
-silo machine (linux). The testing will include both new tests and all
-of the tests from prior assignments. Assignments may be turned in up
-to one week late with a penalty of one letter grade. Students are
-responsible for understanding the entire assignment and all of the
-code that their team produces. The midterm and final exam are designed
-to test a student's understanding of the assignments. The Final
-Project is due Dec. 4 and may be turned in late up to Dec. 11.
+    Organize into teams of 2-4 students. Assignments will be due bi-weekly
+    on Mondays at 11:59pm. Teams that include one or more graduate
+    students are required to complete the challenge exercises. Turn in
+    your assignments by creating a github repository and giving access to
+    Jeremy. Assignments will be graded based on how many test cases they
+    pass. The test suite used for grading will be made available on Sunday
+    night, one day prior to the due date. The testing will be done on the
+    silo machine (linux). The testing will include both new tests and all
+    of the tests from prior assignments. Assignments may be turned in up
+    to one week late with a penalty of one letter grade. Students are
+    responsible for understanding the entire assignment and all of the
+    code that their team produces. The midterm and final exam are designed
+    to test a student's understanding of the assignments. The Final
+    Project is due Dec. 4 and may be turned in late up to Dec. 11.
 
-Email Discussion Group: on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
+* Email Discussion Group: on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
 
 Resources:
 
-    * [Racket](https://download.racket-lang.org/)
-    * [Racket Documentation](https://docs.racket-lang.org/)
-    * [Intel x86 Manual](http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-manual-325462.pdf?_ga=1.200286509.2020252148.1452195021)
-    * [System V Application Binary Interface](https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf)
-    * [Github repository for utility code and test suites is here](https://github.com/IUCompilerCourse/public-student-support-code)
-    * [Uniprocessor Garbage Collection Techniques](https://iu.instructure.com/courses/1735985/files/82131907/download?wrap=1) by Wilson. 
-    * [Fast and Effective Procedure Inlining](https://www.cs.indiana.edu/~dyb/pubs/inlining.pdf) by Waddell and Dybvig.
+* [Racket](https://download.racket-lang.org/)
+* [Racket Documentation](https://docs.racket-lang.org/)
+* [Intel x86 Manual](http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-manual-325462.pdf?_ga=1.200286509.2020252148.1452195021)
+* [System V Application Binary Interface](https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf)
+* [Github repository for utility code and test suites is here](https://github.com/IUCompilerCourse/public-student-support-code)
+* [Uniprocessor Garbage Collection Techniques](https://iu.instructure.com/courses/1735985/files/82131907/download?wrap=1) by Wilson. 
+* [Fast and Effective Procedure Inlining](https://www.cs.indiana.edu/~dyb/pubs/inlining.pdf) by Waddell and Dybvig.
 
