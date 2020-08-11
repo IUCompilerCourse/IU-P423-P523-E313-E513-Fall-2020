@@ -65,8 +65,8 @@ a pull request. The book is at the following location on github:
 
 * Grading:
 
-Course grades are based on the following items. For the weighting, see
-the Canvas panel on the right-hand side of this web page.
+    Course grades are based on the following items. For the weighting, see
+    the Canvas panel on the right-hand side of this web page.
 
     * Participation
         * Class attendance
