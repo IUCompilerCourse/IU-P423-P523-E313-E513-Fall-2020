@@ -106,9 +106,12 @@ Bias-based incident reports can be made by students, faculty and
 staff. Any act of discrimination or harassment based on race,
 ethnicity, religious affiliation, gender, gender identity, sexual
 orientation or disability can be reported through any of the options:
-1) email biasincident@indiana.edu or incident@indiana.edu; 2) call the
-Dean of Students Office at (812) 855-8188 or 3) use the IU mobile App
-(m.iu.edu). Reports can be made anonymously.
+
+1) email biasincident@indiana.edu or incident@indiana.edu;
+
+2) call the Dean of Students Office at (812) 855-8188 or
+
+3) use the IU mobile App (m.iu.edu). Reports can be made anonymously.
 
 **Dean on Call.**
 
