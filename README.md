@@ -66,11 +66,8 @@ a pull request. The book is at the following location on github:
 Course grades are based on the following items. For the weighting, see
 the Canvas panel on the right-hand side of this web page.
 
-* Participation
-    * Class attendance
-    * Piazza questions and answers
-    * Office hours attendance
 * Assignments
+* Quizzes
 * Midterm Exam (in class)
 * Final Exam
 
