@@ -31,7 +31,7 @@ a pull request. The book is at the following location on github:
     https://github.com/IUCompilerCourse/Essentials-of-Compilation
 
 **Lecture:** Tuesday and Thursday, 3:15pm to 4:30pm, on Zoom Meeting ID
-  962 056 0998. (See the Piazza announcement for the passcode.)
+  950 3713 8921. (See the Piazza announcement for the password.)
 
 
 **Office hours** with Jeremy Siek (jsiek): TBD
