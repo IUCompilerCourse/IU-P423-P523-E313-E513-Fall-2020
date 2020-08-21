@@ -75,18 +75,26 @@ the Canvas panel on the right-hand side of this web page.
 
 Organize into teams of 2-4 students. Assignments will be due bi-weekly
 on Mondays at 11:59pm. Teams that include one or more graduate
-students are required to complete the challenge exercises. Turn in
-your assignments by creating a github repository and giving access to
-Jeremy. Assignments will be graded based on how many test cases they
-pass. The test suite used for grading will be made available on Sunday
-night, one day prior to the due date. The testing will be done on the
-silo machine (linux). The testing will include both new tests and all
-of the tests from prior assignments. Assignments may be turned in up
-to one week late with a penalty of one letter grade. Students are
-responsible for understanding the entire assignment and all of the
-code that their team produces. The midterm and final exam are designed
-to test a student's understanding of the assignments. The Final
-Project is due Dec. 4 and may be turned in late up to Dec. 11.
+students are required to complete the challenge exercises.
+
+Turn in your assignments by creating a github repository and giving
+access to Jeremy.
+
+Assignments will be graded based on how many test cases they pass. The
+test suite used for grading will be made available on Sunday night,
+one day prior to the due date. The testing will be done on the silo
+machine (linux). The testing will include both new tests and all of
+the tests from prior assignments.
+
+Assignments may be turned in up to one week late with a penalty of one
+letter grade.
+
+Students are responsible for understanding the entire assignment and
+all of the code that their team produces. The midterm and final exam
+are designed to test a student's understanding of the assignments.
+
+The Final Project is due Dec. 4 and may be turned in late up to
+Dec. 11.
 
 * Assignment: Integers and Variables. Due Sep. 7.
 
