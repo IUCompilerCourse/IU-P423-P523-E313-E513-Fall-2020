@@ -96,7 +96,7 @@ are designed to test a student's understanding of the assignments.
 The Final Project is due Dec. 4 and may be turned in late up to
 Dec. 11.
 
-* Assignment: Integers and Variables. Due Sep. 7.
+* **Assignment: Integers and Variables. Due Sep. 7.**
 
     Implement a compiler for the R1 language by completing the
     exercises in Chapter 2 of the course notes.
