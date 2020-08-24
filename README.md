@@ -108,7 +108,7 @@ Dec. 11.
 
 **Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
 
-**Slack Chat/Messaging:** [Invitation](https://join.slack.com/t/iucompilercou-3cl5771/shared_invite/zt-gn7lxpg7-bil_LKLkqFEpCpjZoUpJnA) and [Workspace](http://iucompilercou-3cl5771.slack.com/)
+**Slack Chat/Messaging:** [Invitation](https://join.slack.com/t/iucompilercou-3cl5771/shared_invite/zt-gn7lxpg7-bil_LKLkqFEpCpjZoUpJnA) and [Workspace](http://iu-compiler-course.slack.com/)
 
 **Resources:**
 
