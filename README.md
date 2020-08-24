@@ -80,7 +80,8 @@ students are required to complete the challenge exercises.
 Turn in your assignments by creating a github repository and giving
 access to Jeremy.
 
-Assignments will be graded based on how many test cases they pass.
+Assignments will be graded based on how many test cases they succeed on.
+Partial credit will be given for each "pass" of the compiler.
 Some of the tests are in the public support code (see Resources below)
 and the rest of the tests will be made available on Sunday night, one
 day prior to the due date. The testing will be done on the linux
@@ -104,11 +105,22 @@ Dec. 11.
 
     Implement a compiler for the R1 language by completing the
     exercises in Chapter 2 of the course notes.
-    The compiler should 
+    The compiler should be in a file named ```compiler.rkt```
+    and it should include the following functions with exactly
+    these names:
+
+    * ```uniquify```
+    * ```remove-complex-opera*```
+    * ```explicate-control```
+    * ```select-instructions```
+    * ```assign-homes```
+    * ```patch-instructions```
+    * ```print-x86```
 
     If there is a graduate student on your team, also complete the
     challenge exercises in Chapter 2, in which you implement a partial
-    evaluator for the R1 language.
+    evaluator for the R1 language. The pass should be named
+    ```partial-eval```.
     
 
 **Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
