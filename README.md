@@ -113,8 +113,11 @@ Dec. 11.
 
 **Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
 
-**Slack Chat/Messaging:** [Workspace](http://iu-compiler-course.slack.com/)
-  (see invitation link on Piazza or login using your iu email address).
+**Slack Chat/Messaging:**
+  [Workspace](http://iu-compiler-course.slack.com/) (see invitation
+  link on Piazza or
+  [signup](https://join.slack.com/t/iu-compiler-course/signup?x=x-p1325281886868-1312364974614-1331891515409)
+  using your iu email address).
 
 **Resources:**
 
