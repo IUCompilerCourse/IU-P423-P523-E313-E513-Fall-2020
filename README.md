@@ -108,6 +108,8 @@ Dec. 11.
 
 **Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
 
+**Slack Chat/Messaging:** [Slack](https://join.slack.com/t/iucompilercou-3cl5771/shared_invite/zt-gn7lxpg7-bil_LKLkqFEpCpjZoUpJnA)
+
 **Resources:**
 
 * [Racket](https://download.racket-lang.org/)
