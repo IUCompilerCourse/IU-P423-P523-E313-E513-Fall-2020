@@ -80,10 +80,13 @@ students are required to complete the challenge exercises.
 Turn in your assignments by creating a github repository and giving
 access to Jeremy.
 
-Assignments will be graded based on how many test cases they pass. The
-test suite used for grading will be made available on Sunday night,
-one day prior to the due date. The testing will be done on the silo
-machine (linux). The testing will include both new tests and all of
+Assignments will be graded based on how many test cases they pass.
+Some of the tests are in the public support code (see Resources below)
+and the rest of the tests will be made available on Sunday night, one
+day prior to the due date. The testing will be done on the linux
+machine kj.luddy.indiana.edu named after [Katherine
+Johnson](https://en.wikipedia.org/wiki/Katherine_Johnson) of NASA
+fame. The testing will include both new tests and all of
 the tests from prior assignments.
 
 Assignments may be turned in up to one week late with a penalty of one
@@ -112,11 +115,11 @@ Dec. 11.
 
 **Resources:**
 
+* [Github repository for support code and test suites is here](https://github.com/IUCompilerCourse/public-student-support-code)
 * [Racket](https://download.racket-lang.org/)
 * [Racket Documentation](https://docs.racket-lang.org/)
 * [Intel x86 Manual](http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-manual-325462.pdf?_ga=1.200286509.2020252148.1452195021)
 * [System V Application Binary Interface](https://software.intel.com/sites/default/files/article/402129/mpx-linux64-abi.pdf)
-* [Github repository for utility code and test suites is here](https://github.com/IUCompilerCourse/public-student-support-code)
 * [Uniprocessor Garbage Collection Techniques](https://iu.instructure.com/courses/1735985/files/82131907/download?wrap=1) by Wilson. 
 * [Fast and Effective Procedure Inlining](https://www.cs.indiana.edu/~dyb/pubs/inlining.pdf) by Waddell and Dybvig.
 
