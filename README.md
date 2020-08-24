@@ -84,10 +84,11 @@ Assignments will be graded based on how many test cases they pass.
 Some of the tests are in the public support code (see Resources below)
 and the rest of the tests will be made available on Sunday night, one
 day prior to the due date. The testing will be done on the linux
-machine kj.luddy.indiana.edu named after [Katherine
+machine kj.luddy.indiana.edu named
+after [Katherine
 Johnson](https://en.wikipedia.org/wiki/Katherine_Johnson) of NASA
-fame. The testing will include both new tests and all of
-the tests from prior assignments.
+fame. The testing will include both new tests and all of the tests
+from prior assignments.
 
 Assignments may be turned in up to one week late with a penalty of one
 letter grade.
@@ -103,6 +104,7 @@ Dec. 11.
 
     Implement a compiler for the R1 language by completing the
     exercises in Chapter 2 of the course notes.
+    The compiler should 
 
     If there is a graduate student on your team, also complete the
     challenge exercises in Chapter 2, in which you implement a partial
@@ -111,7 +113,8 @@ Dec. 11.
 
 **Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
 
-**Slack Chat/Messaging:** [Invitation](https://join.slack.com/t/iucompilercou-3cl5771/shared_invite/zt-gn7lxpg7-bil_LKLkqFEpCpjZoUpJnA) and [Workspace](http://iu-compiler-course.slack.com/)
+**Slack Chat/Messaging:** [Workspace](http://iu-compiler-course.slack.com/)
+  (see invitation link on Piazza).
 
 **Resources:**
 
