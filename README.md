@@ -64,7 +64,9 @@ a pull request. The book is at the following location on github:
 **Grading:**
 
 Course grades are based on the following items. For the weighting, see
-the Canvas panel on the right-hand side of this web page.
+the Canvas panel on the right-hand side of this web page.  Grading
+will take into account any technology problems that arrise; i.e. you
+won't fail the class because your internet went out.
 
 * Assignments
 * Quizzes
@@ -91,12 +93,23 @@ Johnson](https://en.wikipedia.org/wiki/Katherine_Johnson) of NASA
 fame. The testing will include both new tests and all of the tests
 from prior assignments.
 
+You may request feedback on your assignments prior to the due date.
+Just commit your work to github and send us email.
+
 Assignments may be turned in up to one week late with a penalty of one
 letter grade.
 
 Students are responsible for understanding the entire assignment and
 all of the code that their team produces. The midterm and final exam
 are designed to test a student's understanding of the assignments.
+
+Students are free to discuss and get help on the assignments from
+anyone or anywhere. When posting questions on Piazza, it is OK to post
+your code.
+
+In contrast, for quizzes and exams, students are asked to work
+alone. The quizzes and exams are closed book.  We will be using
+Respondus Monitor for online proctoring.  
 
 The Final Project is due Dec. 4 and may be turned in late up to
 Dec. 11.
