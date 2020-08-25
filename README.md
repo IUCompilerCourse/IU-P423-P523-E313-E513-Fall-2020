@@ -34,7 +34,10 @@ a pull request. The book is at the following location on github:
   950 3713 8921. (See the Piazza announcement for the password.)
 
 
-**Office hours** with Jeremy Siek (jsiek): TBD
+**Office hours**
+
+* Jeremy Siek (jsiek): TBD
+* Caner Derici (cderici): TBD
 
 **Topics:**
 
@@ -65,7 +68,7 @@ a pull request. The book is at the following location on github:
 
 Course grades are based on the following items. For the weighting, see
 the Canvas panel on the right-hand side of this web page.  Grading
-will take into account any technology problems that arrise; i.e. you
+will take into account any technology problems that arrise, i.e., you
 won't fail the class because your internet went out.
 
 * Assignments
@@ -80,7 +83,7 @@ on Mondays at 11:59pm. Teams that include one or more graduate
 students are required to complete the challenge exercises.
 
 Turn in your assignments by creating a github repository and giving
-access to Jeremy.
+access to Jeremy (jsiek) and Caner.
 
 Assignments will be graded based on how many test cases they succeed on.
 Partial credit will be given for each "pass" of the compiler.
