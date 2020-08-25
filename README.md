@@ -123,17 +123,17 @@ Dec. 11.
 
     Implement a compiler for the R1 language by completing the
     exercises in Chapter 2 of the course notes.
-    The compiler should be in a file named ```compiler.rkt```
+    The compiler should be in a file named `compiler.rkt`
     and it should include the following functions with exactly
     these names:
 
-    * ```uniquify```
-    * ```remove-complex-opera*```
-    * ```explicate-control```
-    * ```select-instructions```
-    * ```assign-homes```
-    * ```patch-instructions```
-    * ```print-x86```
+    * `uniquify`
+    * `remove-complex-opera*`
+    * `explicate-control`
+    * `select-instructions`
+    * `assign-homes`
+    * `patch-instructions`
+    * `print-x86`
 
     If there is a graduate student on your team, also complete the
     challenge exercises in Chapter 2, in which you implement a partial
