@@ -39,7 +39,8 @@ a pull request. The book is at the following location on github:
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
   Zoom Meeting ID: 949 1594 8290.
 
-* Caner Derici (cderici): TBD
+* Caner Derici (cderici): Mondays 11am-12pm, Wednesdays 11am-12pm.
+  Zoom Meeting ID: 774 5516 2736.
 
 **Topics:**
 
@@ -85,7 +86,7 @@ on Mondays at 11:59pm. Teams that include one or more graduate
 students are required to complete the challenge exercises.
 
 Turn in your assignments by creating a github repository and giving
-access to Jeremy (jsiek) and Caner.
+access to Jeremy (jsiek) and Caner (cderici).
 
 Assignments will be graded based on how many test cases they succeed on.
 Partial credit will be given for each "pass" of the compiler.
