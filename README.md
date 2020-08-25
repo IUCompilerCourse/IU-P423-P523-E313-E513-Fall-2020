@@ -139,7 +139,7 @@ Dec. 11.
     ```partial-eval```.
     
 
-**Email Discussion Group:** on [Piazza](piazza.com/iu/fall2020/p423p523e313e513)
+**Email Discussion Group:** on [Piazza](http://piazza.com/iu/fall2020/p423p523e313e513)
 
 **Slack Chat/Messaging:**
   [Workspace](http://iu-compiler-course.slack.com/) (see invitation
