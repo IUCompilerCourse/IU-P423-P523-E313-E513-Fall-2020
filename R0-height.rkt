@@ -15,11 +15,11 @@
 (define (list-max ls)
   (foldl max 0 ls))
 
-(define (height ast)
-  (match ast
+(define (height e)
+  (match e
     [(Int n) 1]
-    [(Prim op arg*)
-     (add1 (list-max (map height arg*)))]
+    [(Prim op e*)
+     (add1 (list-max (map height e*)))]
     ))
 
 (height E1)

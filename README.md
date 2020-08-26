@@ -34,6 +34,10 @@ a pull request. The book is at the following location on github:
   950 3713 8921. (See the Piazza announcement for the password.)
 
 
+**Lecture Recordings:**
+
+* [August 26](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd) Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
