@@ -1,5 +1,5 @@
-August 25th
------------
+August 25
+---------
 
 Welcome to Compilers! (P423, P523, E313, E513)
 
@@ -73,6 +73,3 @@ Welcome to Compilers! (P423, P523, E313, E513)
 
 * Pattern Matching and Structural Recursion `R0-height.rkt`
 
-* Definitional Interpreters `interp-R0.rkt`, `R0-interp-example.rkt`
-
-    Draw correctness diagram.
