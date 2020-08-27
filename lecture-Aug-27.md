@@ -9,7 +9,7 @@
 
 ## The R1 Language: R0 + variables and let
 
-    exp ::= int | (read) | (- exp) | (+ exp exp) | (- exp exp)
+    exp ::= int | (read) | (- exp) | (+ exp exp) 
           | var | (let ([var exp]) exp)
     R0 ::= exp
 
