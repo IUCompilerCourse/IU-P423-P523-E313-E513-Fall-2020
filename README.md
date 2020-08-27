@@ -36,7 +36,7 @@ a pull request. The book is at the following location on github:
 
 **Lecture Notes and Recordings:**
 
-* August 25: Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars, [Notes](./lecture-Aug-25.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd)
+* August 25 [Notes](./lecture-Aug-25.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd): Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars, 
 
 
 **Office hours**
