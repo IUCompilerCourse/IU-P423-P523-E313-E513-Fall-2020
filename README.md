@@ -34,9 +34,10 @@ a pull request. The book is at the following location on github:
   950 3713 8921. (See the Piazza announcement for the password.)
 
 
-**Lecture Recordings:**
+**Lecture Notes and Recordings:**
 
-* [August 25](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd) Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars
+* August 25: Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars, [Notes](./lecture-Aug-25.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd)
+
 
 **Office hours**
 
