@@ -11,7 +11,7 @@
 
     exp ::= int | (read) | (- exp) | (+ exp exp) 
           | var | (let ([var exp]) exp)
-    R0 ::= exp
+    R1 ::= exp
 
 Examples:
 
