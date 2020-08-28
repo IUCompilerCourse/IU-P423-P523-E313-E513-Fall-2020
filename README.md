@@ -38,7 +38,7 @@ a pull request. The book is at the following location on github:
 
 * August 25 [Notes](./lecture-Aug-25.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_hwlujpzd): Introduction, Concrete and Abstract Syntax, Racket Structures, Grammars, 
 
-* August 27 [Notes](./lecture-Aug-27.md): Interpreters, Compiler Correctness, R1 Language, x86
+* August 27 [Notes](./lecture-Aug-27.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+August+27%2C+2020/0_pmzfbou3): Interpreters, Compiler Correctness, R1 Language, x86
 
 
 **Office hours**
