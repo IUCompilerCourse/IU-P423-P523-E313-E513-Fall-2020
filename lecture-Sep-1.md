@@ -3,28 +3,28 @@
 Overview of the Passes
 ----------------------
 
-	R1
-	|    uniquify
-	V
-	R1'
-	|    remove-complex-opera*
-	V
-	R1''
-	|    explicate-control
-	V
-	C0
-	|    select instructions
-	V
-	x86*
-	|    assign homes
-	V
-	x86*
-	|    patch instructions
-	V
-	x86
-	|    print x86
-	V
-	x86-in-text
+    R1
+    |    uniquify
+    V
+    R1'
+    |    remove-complex-opera*
+    V
+    R1''
+    |    explicate-control
+    V
+    C0
+    |    select instructions
+    V
+    x86*
+    |    assign homes
+    V
+    x86*
+    |    patch instructions
+    V
+    x86
+    |    print x86
+    V
+    x86-in-text
 
 Uniquify
 --------
@@ -45,7 +45,7 @@ Examples:
     (let ([x 32])
       (let ([y 10])
         (+ x y)))
-	=>
+    =>
     (let ([x.1 32])
       (let ([y.2 10])
         (+ x.1 y.2)))
@@ -95,7 +95,8 @@ and not
 Grammar of the output:
 
     atm ::= var | int
-    exp ::= atm | (read) | (- atm) | (+ atm atm) | (let ([var exp]) exp)
+    exp ::= atm | (read) | (- atm) | (+ atm atm) 
+        | (let ([var exp]) exp)
     R1'' ::= exp
 
 Recommended function organization:
@@ -119,12 +120,12 @@ assignment statements.
 The target of this pass is the C0 language.
 Here is the grammar for C0.
 
-	atm ::= int | var
-	exp ::= atm | (read) | (- atm) | (+ atm atm)
-	stmt ::= var = exp; 
+    atm ::= int | var
+    exp ::= atm | (read) | (- atm) | (+ atm atm)
+    stmt ::= var = exp; 
     tail ::= return exp; | stmt tail 
-	C0 ::= (label: tail)^+
-	
+    C0 ::= (label: tail)^+
+    
 Example:
 
     (let ([x (let ([y (- 42)])
@@ -132,7 +133,7 @@ Example:
       (- x))
     =>
     locals:
-    '(x y)
+      '(x y)
     start:
         y = (- 42);
         x = y;
@@ -143,8 +144,10 @@ but splitting the exp non-terminal into two, one for `tail` position
 and one for not-tail `nt` position.
 
     atm ::= var | int
-    nt ::= atm | (read) | (- atm) | (+ atm atm) | (let ([var nt]) nt)
-    tail ::= atm | (read) | (- atm) | (+ atm atm) | (let ([var nt]) tail)
+    nt ::= atm | (read) | (- atm) | (+ atm atm) 
+       | (let ([var nt]) nt)
+    tail ::= atm | (read) | (- atm) | (+ atm atm) 
+         | (let ([var nt]) tail)
     R1'' ::= tail
 
 Recommended function organization:
@@ -185,31 +188,31 @@ Translate statements into x86-style instructions.
 
 For example
 
-	x = (+ 10 32);
-	=>
-	movq $10, x
-	addq $32, x
+    x = (+ 10 32);
+    =>
+    movq $10, x
+    addq $32, x
 
 Some cases can be handled with a single instruction.
 
-	x = (+ 10 x);
-	=>
-	addq $10, x
+    x = (+ 10 x);
+    =>
+    addq $10, x
     
 
 The `read` operation must be turned into a 
 call to the `read_int` function in `runtime.c`.
 
-	x = (read);
-	=>
-	callq read_int
-	movq %rax x
-	
+    x = (read);
+    =>
+    callq read_int
+    movq %rax x
+    
 The return statement is treated like an assignment to `rax` followed
 by a jump to the `conclusion` label.
 
-	return e;
-	=>
+    return e;
+    =>
     instr
     jmp conclusion
     
@@ -218,7 +221,7 @@ where
     rax = e;
     =>
     instr
-	
+    
     
 The Stack and Procedure Call Frames
 -----------------------------------
@@ -252,18 +255,18 @@ Suppose we have two variables in the pseudo-x86, `tmp.1` and `tmp.2`.
 We places them in the -16 and -8 offsets from the base pointer `rbp`
 using the `deref` form.
 
-	movq $10, tmp.1
-	negq tmp.1
-	movq tmp.1, tmp.2
-	addq $52, tmp.2
-	movq tmp.2, %rax
+    movq $10, tmp.1
+    negq tmp.1
+    movq tmp.1, tmp.2
+    addq $52, tmp.2
+    movq tmp.2, %rax
     =>
-	movq $10, -16(%rbp)
-	negq -16(%rbp)
-	movq -16(%rbp), -8(%rbp)
-	addq $52, -8(%rbp)
-	movq -8(%rbp), %rax
-	
+    movq $10, -16(%rbp)
+    negq -16(%rbp)
+    movq -16(%rbp), -8(%rbp)
+    addq $52, -8(%rbp)
+    movq -8(%rbp), %rax
+    
 
 Patch Instructions
 ------------------
@@ -275,18 +278,18 @@ For example, the move from stack location -16 to -8 uses two memory
 locations in the same instruction. So we split it up into two
 instructions and use rax to hold the value at location -16.
 
-	movq $10 -16(%rbp)
-	negq -16(%rbp)
-	movq -16(%rbp) -8(%rbp) *
-	addq $52 -8(%rbp)
-	movq -8(%rbp) %rax
+    movq $10 -16(%rbp)
+    negq -16(%rbp)
+    movq -16(%rbp) -8(%rbp) *
+    addq $52 -8(%rbp)
+    movq -8(%rbp) %rax
     =>
-	movq $10 -16(%rbp)
-	negq -16(%rbp)
-	movq -16(%rbp), %rax *
-	movq %rax, -8(%rbp)  *
-	addq $52, -8(%rbp)
-	movq -8(%rbp), %rax
+    movq $10 -16(%rbp)
+    negq -16(%rbp)
+    movq -16(%rbp), %rax *
+    movq %rax, -8(%rbp)  *
+    addq $52, -8(%rbp)
+    movq -8(%rbp), %rax
     
 
 Print x86
@@ -316,23 +319,23 @@ The conclusion must
 Continuing the above example
 
     start:
-		movq	$10, -16(%rbp)
-		negq	-16(%rbp)
-		movq	-16(%rbp), %rax
-		movq	%rax, -8(%rbp)
-		addq	$52, -8(%rbp)
-		movq	-8(%rbp), %rax
+        movq    $10, -16(%rbp)
+        negq    -16(%rbp)
+        movq    -16(%rbp), %rax
+        movq    %rax, -8(%rbp)
+        addq    $52, -8(%rbp)
+        movq    -8(%rbp), %rax
         jmp     conclusion
         
-		.globl _main
-	main:
-		pushq	%rbp
-		movq	%rsp, %rbp
-		subq	$16, %rsp
+        .globl _main
+    main:
+        pushq   %rbp
+        movq    %rsp, %rbp
+        subq    $16, %rsp
         jmp start
 
     conclusion:
-		addq	$16, %rsp
-		popq	%rbp
-		retq
+        addq    $16, %rsp
+        popq    %rbp
+        retq
     
