@@ -3,10 +3,11 @@
 Indiana University, Fall 2020
 
 
-High-level programming languages like Racket make programming a
-breeze, but how do they work? There's a big gap between Racket and
-machine instructions for modern computers. Learn how to translate
-Racket (a dialect of Scheme) programs all the way to Intel x86
+High-level programming languages like Racket make it easier to program
+relative to low-level languages such as x86 assembly code. But how do
+high-level languages work? There's a big gap between Racket and
+machine instructions for modern computers. In this class you learn how
+to translate Racket programs (a dialect of Scheme) all the way to x86
 assembly language.
 
 Traditionally, compiler courses teach one phase of the compiler at a
