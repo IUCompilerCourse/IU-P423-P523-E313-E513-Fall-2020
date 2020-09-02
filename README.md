@@ -112,9 +112,6 @@ from prior assignments.
 You may request feedback on your assignments prior to the due date.
 Just commit your work to github and send us email.
 
-Assignments may be turned in up to one week late with a penalty of one
-letter grade.
-
 Students are responsible for understanding the entire assignment and
 all of the code that their team produces. The midterm and final exam
 are designed to test a student's understanding of the assignments.
@@ -129,6 +126,10 @@ Respondus Monitor for online proctoring.
 
 The Final Project is due Dec. 4 and may be turned in late up to
 Dec. 11.
+
+**Late assignment policy:** Assignments may be turned in up to one
+week late with a penalty of one letter grade.
+
 
 * **Assignment: Integers and Variables. Due Sep. 7.**
 
