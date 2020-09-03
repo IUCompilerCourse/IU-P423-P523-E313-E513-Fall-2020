@@ -49,7 +49,7 @@ call to the `read_int` function in `runtime.c`.
     x = (read);
     =>
     callq read_int
-    movq %rax x
+    movq %rax, x
     
 The return statement is treated like an assignment to `rax` followed
 by a jump to the `conclusion` label.
