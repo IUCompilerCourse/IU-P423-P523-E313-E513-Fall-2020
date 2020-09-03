@@ -142,8 +142,7 @@ Translate the x86 AST into a string in the form of the x86 concrete
 syntax.
 
 We also need to include a prelude and conclusion for the main
-procedure, and insert a call to print_int using rdi for parameter
-passing.
+procedure.
 
 The return address is saved to the stack by the caller (For the `main`
 function, the caller is the operating system.)
