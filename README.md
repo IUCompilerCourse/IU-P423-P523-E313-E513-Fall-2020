@@ -43,6 +43,7 @@ a pull request. The book is at the following location on github:
 
 * September 1 [Notes](./lecture-Sep-1.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+1%2C+2020/1_7o6702no): Uniquify, Remove Complex Operands, Explicate Control
 
+* September 3 [Notes](./lecture-Sep-3.md): Select Instructions, Assign Homes, Path Instructions, Print x86
 
 **Office hours**
 
