@@ -11,16 +11,16 @@ Overview of the Passes
     |    explicate-control
     V
     C0
-    |    select instructions
+    |    select-instructions
     V
     x86*
-    |    assign homes
+    |    assign-homes
     V
     x86*
-    |    patch instructions
+    |    patch-instructions
     V
     x86
-    |    print x86
+    |    print-x86
     V
     x86-in-text
 
