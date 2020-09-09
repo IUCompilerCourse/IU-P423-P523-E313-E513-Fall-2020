@@ -45,7 +45,7 @@ a pull request. The book is at the following location on github:
 
 * September 3 [Notes](./lecture-Sep-3.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+3%2C+2020/1_sqpe15y2): Select Instructions, Assign Homes, Path Instructions, Print x86
 
-* September 8 [Notes](./lecture-Sep-8.md): Code Review, Register Allocation
+* September 8 [Notes](./lecture-Sep-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_vizyqbn0): Code Review, Register Allocation
 
 **Office hours**
 

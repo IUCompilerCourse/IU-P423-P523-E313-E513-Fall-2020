@@ -5,16 +5,34 @@
     (define (uniquify-exp symtab)
       (lambda (e)
         (match e
-          [(Var x) (Var (get-sym-rep symtab x))]
+          [(Var x) (Var (get-sym-rep symtab x))] ;; (dict-ref symtab x)
           [(Int n) (Int n)]
           [(Let x e body)
            (let* ([new-sym (gensym x)]
-                  [symtab (add-to-symtab symtab x new-sym)])
+                  [new-symtab (add-to-symtab symtab x new-sym)])
+                  ;; (dict-set symtab x new-sym)
              (Let new-sym  ((uniquify-exp symtab) e)
-               ((uniquify-exp symtab) body)))]
+               ((uniquify-exp new-symtab) body)))]
           [(Prim op es)
            (Prim op (for/list ([e es]) ((uniquify-exp symtab) e)))]
           )))
+
+Example:
+
+    (let ([x 10])
+       (let ([x (+ x 1)])
+         x))
+
+    wrong:
+    (let ([x.1 10])
+       (let ([x.2 (+ x.2 1)])
+         x.2))
+         
+    correct:
+    (let ([x.1 10])
+       (let ([x.2 (+ x.1 1)])
+         x.2))
+
 
 ## `remove-complex-opera*`
 
@@ -71,20 +89,13 @@
 
     (define (explicate-assign r1exp v c)
       (match r1exp
-        [(Int n)
-         (values (Seq (Assign v (Int n)) c) '())]
-        [(Prim 'read '())
-         (values (Seq (Assign v (Prim 'read '())) c) '())]
-        [(Prim '- (list e))
-         (values (Seq (Assign v (Prim '- (list e))) c) '())] 
-        [(Prim '+ (list e1 e2))
-         (values (Seq (Assign v (Prim '+ (list e1 e2))) c) '())] 
-        [(Var x)
-         (values (Seq (Assign v (Var x)) c) '())]
         [(Let x e body) 
          (define-values (tail let-binds) (explicate-assign body v c))
          (define-values (tail^ let-binds^) (explicate-assign e (Var x) tail))
-         (values tail^ (cons x (append let-binds let-binds^)))]))
+         (values tail^ (cons x (append let-binds let-binds^)))]
+        [else
+          (values (Seq (Assign v r1exp) c) '())]
+         ))
 
 ## `select-instructions`
 
@@ -136,11 +147,7 @@
 
 ## `assign-homes`
 
-    (define (calc-stack-space ls)
-      (cond
-        [(null? ls) 0]
-        [else (+ 8 (calc-stack-space (cdr ls)))]
-        ))
+    (define (calc-stack-space ls) (* 8 (length ls))
 
     (define (find-index v ls)
       (cond
@@ -149,26 +156,26 @@
         [else (add1 (find-index v (cdr ls)))]
         ))
 
-    (define (assign-homes-exp e ls)
-      (match e
+    (define (assign-homes-imm i ls)
+      (match i
         [(Reg reg) (Reg reg)]
         [(Imm int) (Imm int)]
         [(Var v) (Deref 'rbp (* -8 (find-index v (cdr ls))))]
-        [(Instr 'addq (list e1 e2))
-         (Instr 'addq (list (assign-homes-exp e1 ls) (assign-homes-exp e2 ls)))]
-        [(Instr 'subq (list e1 e2)) 
-         (Instr 'subq (list (assign-homes-exp e1 ls) (assign-homes-exp e2 ls)))]
-        [(Instr 'movq (list e1 e2)) 
-         (Instr 'movq (list (assign-homes-exp e1 ls) (assign-homes-exp e2 ls)))]
-        [(Instr 'negq (list e1)) 
-        (Instr 'negq (list (assign-homes-exp e1 ls)))]
-        [(Callq l) (Callq l)]
-        [(Retq) (Retq)]
-        [(Instr 'pushq e1) (Instr 'pushq e1)]
-        [(Instr 'popq e1) (Instr 'popq e1)]
-        [(Jmp e1) (Jmp e1)]
+       ))
+       
+    (define (assign-homes-instr i ls)
+      (match i
+        [(Instr op (list e1)) 
+         (Instr op (list (assign-homes-imm e1 ls)))]
+        [(Instr op (list e1 e2))
+         (Instr op (list (assign-homes-imm e1 ls) (assign-homes-imm e2 ls)))]
+        [else i]
+        ))
+        
+    (define (assign-homes-block b ls)
+      (match b
         [(Block info es) 
-         (Block info (for/list ([e es]) (assign-homes-exp e ls)))]
+         (Block info (for/list ([e es]) (assign-homes-instr e ls)))]
         ))
 
     (define (assign-homes p)
@@ -176,21 +183,21 @@
         [(Program info (CFG es)) 
          (Program (list (cons 'stack-space (calc-stack-space (cdr (car info)))))
            (CFG (for/list ([ls es]) 
-             (cons (car ls) (assign-homes-exp (cdr ls) (car info))))))]
+             (cons (car ls) (assign-homes-block (cdr ls) (car info))))))]
         ))
 
 ## `patch-instructions`
 
-    (define (do-patch  instruction)
+    (define (patch-instr  instruction)
       (match instruction
-        [(Instr e (list (Deref  reg off) (Deref reg2 off2)))
+        [(Instr op (list (Deref  reg off) (Deref reg2 off2)))
              (list (Instr 'movq (list (Deref reg off) (Reg 'rax)))
-                   (Instr e (list (Reg 'rax) (Deref reg2 off2))))]
+                   (Instr op (list (Reg 'rax) (Deref reg2 off2))))]
         [else (list instruction)]))
 
-    (define (patch e)
-      (match e
-        [(Block '() exp) (Block '() (append-map do-patch exp))]
+    (define (patch-block b)
+      (match b
+        [(Block '() instrs) (Block '() (append-map patch-instr instrs))]
         ))
 
     (define (patch-instructions p)
@@ -199,7 +206,8 @@
          (Program info
                   (CFG
                    (map
-                    (lambda (x) `(,(car x) . ,(patch (cdr x)))) B-list)))]))
+                    (lambda (x) `(,(car x) . ,(patch-block (cdr x)))) 
+                    B-list)))]))
 
 ## `print-x86`
 
@@ -247,10 +255,10 @@
           (format "~a:\n" (label-name "main"))
           (format "\tpushq\t%rbp\n")
           (format "\tmovq\t%rsp, %rbp\n")
-          (format "\tsubq\t$~a, %rsp\n" stack-space)
+          (format "\tsubq\t$~a, %rsp\n" (align stack-space 16))
           (format "\tjmp ~a\n" (label-name 'start))
           (format "~a:\n" (label-name 'conclusion))
-          (format "\taddq\t$~a, %rsp\n" stack-space)
+          (format "\taddq\t$~a, %rsp\n" (align stack-space 16))
           (format "\tpopq\t%rbp\n")
           (format "\tretq\n")
           )]
