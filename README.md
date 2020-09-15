@@ -49,6 +49,8 @@ a pull request. The book is at the following location on github:
 
 * September 10 [Notes](./lecture-Sep-10.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_cui0st1f): Register Allocation (Liveness Analysis, Build Interference Graph)
 
+* September 15 [Notes](./lecture-Sep-15.md): Register Allocation (Graph Coloring)
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
