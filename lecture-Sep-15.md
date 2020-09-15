@@ -9,11 +9,33 @@
 * In the interference graph, this means that adjacent vertices must be
   mapped to different registers. 
 
-* If we think of registers as colors, then this becomes an instance of
-  the *graph coloring problem*.
+* If we think of registers and stack locations as colors, then this
+  becomes an instance of the *graph coloring problem*.
 
 If you aren't familiar with graph coloring, you might instead be
 familiar with another instance of it, *Sudoku*.
+
+Review Sudoku and relate it to graph coloring.
+
+    -------------------
+    |  9  |5 3 7|  1 4|
+    |  3 8|  4 6|  9  |
+    |4    |1    |2    |
+    -------------------
+    |     |     |    2|
+    |7   9|8   2|1   5|
+    |6    |     |     |
+    -------------------
+    |    4|    8|    6|
+    |  6  |4 9  |7 2  |
+    |8 7  |6 2 3|  4  |
+    -------------------
+
+* Squares on the board corresponds to vertices in the graph.
+* The vertices for squares in the same row are connected by edges.
+*               "                      column         "          .
+*               "                      3x3 region     "          .
+* The numbers 1-9 are corresponds to 9 colors. 
 
 What strategies do you use to play Sudoku?
 
