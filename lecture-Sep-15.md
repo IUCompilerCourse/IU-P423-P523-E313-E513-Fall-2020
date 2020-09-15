@@ -32,9 +32,9 @@ Review Sudoku and relate it to graph coloring.
     -------------------
 
 * Squares on the board corresponds to vertices in the graph.
-* The vertices for squares in the same row are connected by edges.
-*               "                      column         "          .
-*               "                      3x3 region     "          .
+* The vertices for squares in the same *row* are connected by edges.
+* The vertices for squares in the same *column* are connected by edges.
+* The vertices for squares in the same *3x3 region* are connected by edges.
 * The numbers 1-9 are corresponds to 9 colors. 
 
 What strategies do you use to play Sudoku?
