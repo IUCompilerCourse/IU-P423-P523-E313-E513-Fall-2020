@@ -35,7 +35,7 @@ Review Sudoku and relate it to graph coloring.
 * The vertices for squares in the same *row* are connected by edges.
 * The vertices for squares in the same *column* are connected by edges.
 * The vertices for squares in the same *3x3 region* are connected by edges.
-* The numbers 1-9 are corresponds to 9 colors. 
+* The numbers 1-9 are corresponds to 9 different colors. 
 
 What strategies do you use to play Sudoku?
 
@@ -51,6 +51,15 @@ What strategies do you use to play Sudoku?
 
 We'll use the DSATUR algorithm of Brelaz (1979).
 Use natural numbers for colors.
+The set W is our worklist, that is, the vertices that still need to be
+colored.
+
+    W <- vertices(G)
+    while W /= {} do
+      pick a vertex u from W with maximum saturation
+      find the lowest color c not in { color[v] | v in adjacent(u) }.
+      color[u] <- c
+      W <- W - {u}
 
 Initial state:
 
@@ -135,17 +144,24 @@ Vertex t.2 is the only one left. Color t.2 0.
 
 * Create variable to register/stack location mapping:
   We're going to reserve `rax` and `r15` for other purposes,
-  so we have 11 remaining registers to use:
+  and we use `rsp` and `rbp` for maintaining the stack,
+  so we have 12 remaining registers to use:
 
-        rbx rcx rdx rsi rdi r8 r9 r10 r12 r13 r14
+        rbx rcx rdx rsi rdi r8 r9 r10 r11 r12 r13 r14
 	
-  Map the first 11 colors to the above registers, and map the rest of
-  the colors to stack locations (starting with a -8 offset from `ebp`
+  Map the first 12 colors to the above registers, and map the rest of
+  the colors to stack locations (starting with a -8 offset from `rbp`
   and going down in increments of 8 bytes.
 
 		0 -> rbx
 		1 -> rcx
 		2 -> rdx
+        3 -> rsi
+        ...
+        12 -> -8(%rbp)
+        13 -> -16(%rbp)
+        14 -> -24(%rbp)
+        ...
 
   So we have the following variable-to-home mapping
 
@@ -157,13 +173,13 @@ Vertex t.2 is the only one left. Color t.2 0.
 		t.1 -> rcx
 		t.2 -> rbx
 
-* Update the program, replacing variables with registers and stack
-    locations. We also record the number of bytes needed of stack space
+* Update the program, replacing variables according to the variable-to-home
+    mapping. We also record the number of bytes needed of stack space
     for the local variables, which in this case is 0.
 
     Recall the example program after instruction selection:
 
-        locals: (v w x y z t.2 t.1)
+        locals: (v w x y z t.1 t.2)
         start:
           movq $1, v
           movq $46, w
