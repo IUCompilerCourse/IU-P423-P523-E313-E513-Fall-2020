@@ -56,91 +56,81 @@ colored.
 
     W <- vertices(G)
     while W /= {} do
-      pick a vertex u from W with maximum saturation
+      pick a vertex u from W with maximal saturation
       find the lowest color c not in { color[v] | v in adjacent(u) }.
       color[u] <- c
       W <- W - {u}
 
 Initial state:
 
-    {}     {}     {}    {}
-    v ---- w ---- x     t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-		   y ---- z     t.2
+    {}     {}     {}
+    t ---- z      x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y ---- w ---- v
 		   {}     {}    {}
 
-There's a tie amogst all vertices. Color v 0. Update saturation of adjacent.
+There's a tie amogst all vertices. Color t 0. Update saturation of adjacent.
 
-    {}    {0}     {}    {}
-    v:0--- w ---- x     t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	       y ---- z     t.2
+    {}    {0}     {}
+    t:0----z      x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y ---- w ---- v
 		   {}    {}     {}
 
-Vertex w is the most saturated. Color w 1. Update saturation of adjacent.
+Vertex z is the most saturated. Color z 1. Update saturation of adjacent.
 
-    {1}   {0}    {1}    {}
-    v:0--- w:1--- x     t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	       y ---- z     t.2
+    {1}   {0}     {}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y ---- w ---- v
 		  {1}    {1}    {}
 
 
-There is a tie between x, y, and z. Color x 0. 
+There is a tie between y and w. Color w 0. 
 
-    {1}   {0}    {1}    {}
-    v:0--- w:1--- x:0   t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	       y ---- z     t.2
-		  {1}    {1}    {}
-
-There is a tie between y and z. Color z 0.
-
-    {1}   {0}    {1}    {0}
-    v:0--- w:1--- x:0   t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	       y ---- z:0   t.2
-		  {0,1}   {1}    {}
+    {1}   {0}     {0}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+	       y ----w:0---- v
+		  {0,1}  {1}    {0}
 
 Vertex y is the most saturated. Color y 2.
 
-    {1}   {0,2}   {1}    {0}
-    v:0--- w:1--- x:0   t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	      y:2--- z:0    t.2
-		  {0,1}  {1,2}   {}
+    {1}   {0,2}   {0}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y:2----w:0---- v
+		  {0,1}  {1,2}   {0}
 
-Vertex t.1 is the most saturated. Color t.1 1.
+Vertex x and v are the most saturated. Color v 1.
 
-    {1}   {0,2}   {1}    {0}
-    v:0--- w:1--- x:0   t.1:1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	      y:2--- z:0    t.2
-		  {0,1}  {1,2}   {1}
+    {1}   {0,2}   {0}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y:2----w:0----v:1
+		  {0,1}  {1,2}   {0}
 
-Vertex t.2 is the only one left. Color t.2 0.
+Vertex x is the most saturated. Color x 1.
 
-    {1}   {0,2}   {1}    {0}
-    v:0--- w:1--- x:0   t.1:1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-	      y:2--- z:0    t.2:0
-		  {0,1}  {1,2}   {1}
+    {1}   {0,2}   {0}
+    t:0----z:1    x:1
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y:2----w:0----v:1
+		  {0,1}  {1,2}   {0}
 
 * Create variable to register/stack location mapping:
   We're going to reserve `rax` and `r15` for other purposes,
@@ -165,13 +155,13 @@ Vertex t.2 is the only one left. Color t.2 0.
 
   So we have the following variable-to-home mapping
 
-		v -> rbx
-		w -> rcx
-		x -> rbx
+		v -> rcx
+		w -> rbx
+		x -> rcx
 		y -> rdx
-		z -> rbx
-		t.1 -> rcx
-		t.2 -> rbx
+		z -> rcx
+		t -> rbx
+
 
 * Update the program, replacing variables according to the variable-to-home
     mapping. We also record the number of bytes needed of stack space
@@ -179,38 +169,36 @@ Vertex t.2 is the only one left. Color t.2 0.
 
     Recall the example program after instruction selection:
 
-        locals: (v w x y z t.1 t.2)
+        locals: v w x y z t
         start:
-          movq $1, v
-          movq $46, w
-          movq v, x
-          addq $7, x
-          movq x, y
-          movq x, z
-          addq w, z
-          movq y, t.1
-          negq t.1
-          movq z, t.2
-          addq t.1, t.2
-          movq t.2, %rax
-          jmp conclusion
+            movq $1, v
+            movq $42, w
+            movq v, x
+            addq $7, x
+            movq x, y
+            movq x, z
+            addq w, z
+            movq y, t
+            negq t
+            movq z, %rax
+            addq t, %rax
+            jmp conclusion
 
     Here's the output of register allocation, after applying
     the variable-to-home mapping.
 
 		stack-space: 0
 		start:
-          movq $1, %rbx
-		  movq $46, %rcx
-		  movq %rbx, %rbx
-		  addq $7, %rbx
-		  movq %rbx, %rdx
-		  movq %rbx, %rbx
-		  addq %rcx, %rbx
-		  movq %rdx, %rcx
-		  negq %rcx
-		  movq %rbx, %rbx
-		  addq %rcx, %rbx
-		  movq %rbx, %rax
-          jmp conclusion
+            movq $1, %rcx
+            movq $42, $rbx
+            movq %rcx, %rcx
+            addq $7, %rcx
+            movq %rcx, %rdx
+            movq %rcx, %rcx
+            addq %rbx, %rcx
+            movq %rdx, %rbx
+            negq %rbx
+            movq %rcx, %rax
+            addq %rbx, %rax
+            jmp conclusion
 

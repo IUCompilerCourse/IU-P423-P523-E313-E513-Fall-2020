@@ -135,7 +135,7 @@ The Final Project is due Dec. 4 and may be turned in late up to
 Dec. 11.
 
 **Late assignment policy:** Assignments may be turned in up to one
-week late with a penalty of one letter grade.
+week late with a penalty of 10%.
 
 
 * **Assignment: Integers and Variables. Due Sep. 7.**
@@ -159,6 +159,9 @@ week late with a penalty of one letter grade.
     evaluator for the R1 language. The pass should be named
     ```partial-eval```.
     
+
+* **Assignment: Register Allocation. Due Sep. 21.**
+
 
 **Email Discussion Group:** on [Piazza](http://piazza.com/iu/fall2020/p423p523e313e513)
 

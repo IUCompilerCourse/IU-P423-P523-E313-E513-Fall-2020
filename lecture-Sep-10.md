@@ -22,28 +22,29 @@ Main ideas:
 ## Running Example
 
     (let ([v 1])
-	  (let ([w 46])
-		(let ([x (+ v 7)])
-		  (let ([y x])
-		    (let ([z (+ x w)])
-		      (+ z (- y)))))))
+      (let ([w 42])
+        (let ([x (+ v 7)])
+          (let ([y x])
+            (let ([z (+ x w)])
+              (+ z (- y)))))))
+
 
 After instruction selection:
 
-    locals: (v w x y z t.2 t.1)
-    movq $1, v
-    movq $46, w
-    movq v, x
-    addq $7, x
-    movq x, y
-    movq x, z
-    addq w, z
-    movq y, t.1
-    negq t.1
-    movq z, t.2
-    addq t.1, t.2
-    movq t.2, %rax
-    jmp conclusion
+    locals: v w x y z t
+    start:
+        movq $1, v
+        movq $42, w
+        movq v, x
+        addq $7, x
+        movq x, y
+        movq x, z
+        addq w, z
+        movq y, t
+        negq t
+        movq z, %rax
+        addq t, %rax
+        jmp conclusion
 
 ## Liveness Analysis
 
@@ -64,20 +65,31 @@ The instructions of the program are numbered 1 to n.
 Here's the program with the live-after set next to each instruction.
 Compute them from bottom to top.
 
-    locals: (v w x y z t.2 t.1)
-    movq $1, v                      {v}
-    movq $46, w                     {v,w}
-    movq v, x                       {w,x}
-    addq $7, x                      {w,x}
-    movq x, y                       {w,x,y}
-    movq x, z                       {w,y,z}
-    addq w, z                       {y,z} = ({t.1,z} - {t.1}) U {y}
-    movq y, t.1                     {t.1,z} = ({t.1,z} - {t.1}) U {t.1}
-    negq t.1                        {t.1,z} = ({t.1,t.2} - {t.2}) U {z}
-    movq z, t.2                     {t.1,t.2} = ({t.2} - {t.2}) U {t.1,t.2}
-    addq t.1, t.2                   {t.2} = ({} - {rax}) U {t.2}
-    movq t.2, %rax                  {}
-    jmp conclusion                  {}
+                       {}
+    movq $1, v
+                       {v}
+    movq $42, w
+                       {v,w}
+    movq v, x
+                       {w,x}
+    addq $7, x
+                       {w,x}
+    movq x, y
+                       {w,x,y}
+    movq x, z
+                       {w,y,z}
+    addq w, z
+                       {y,z}
+    movq y, t
+                       {t,z}
+    negq t
+                       {t,z}
+    movq z, %rax
+                       {t}
+    addq t, %rax
+                       {}
+    jmp conclusion
+                       {}
 
 
 ## Build the Interference Graph
@@ -130,29 +142,38 @@ the followng three rules.
 Let us walk through the running example, proceeding top to bottom,
 apply the three rules to build the interference graph.
 
-	locals: (v w x y z t.1 t.2)
-	movq $1, v         {v}        rule 3: no interference (v=v)
-	movq $46, w        {v,w}      rule 3: edge w-v (v!=46)
-	movq v, x          {w,x}      rule 3: edge x-w (w!=v)
-	addq $7, x         {w,x}      rule 1: edge x-w (dup.)
-	movq x, y          {w,x,y}    rule 3: edge y-w (w!=x)
-	                                                    no edge y-x (x=x)
-	movq x, z          {w,y,z}    rule 3: edge z-w (w!=x)
-	                                                    edge z-y (y!=x)
-														no edge z-x (x=x)
-	addq w, z          {y,z}      rule 1: edge z-y (dup.)
-	movq y, t.1        {t.1,z}    rule 3: edge t.1-z (z!=y)
-	negq t.1           {t.1,z}    rule 1: edge t.1-z (dup)
-	movq z, t.2        {t.1,t.2}  rule 3: edge t.2-t.1 (t.1!=z)
-	addq t.1, t.2      {t.2}      rule 1: no interference
-	movq t.2, %rax     {}         rule 3: no interference
+                       {}
+	movq $1, v                    rule 3: no interference (v=v)
+                       {v}
+	movq $42, w                   rule 3: edge w-v
+                       {v,w}
+	movq v, x                     rule 3: edge x-w
+                       {w,x}
+	addq $7, x                    rule 1: edge x-w (dup.)
+                       {w,x}
+	movq x, y                     rule 3: edge y-w, no edge y-x
+                       {w,x,y}
+	movq x, z                     rule 3: edge z-w, edge z-y
+                       {w,y,z}
+	addq w, z                     rule 1: edge z-y (dup.)
+                       {y,z}
+	movq y, t                     rule 3: edge t-z
+                       {t,z}
+	negq t.1                      rule 1: edge t-z (dup)
+                       {t,z}
+	movq z, %rax                  rule 2: but ignore rax
+                       {t}
+	addq t, $rax                  rule 1: but ignore rax
+                       {}
+	jmp conclusion
+                       {}
 	  
 So the interference graph looks as follows:
 
-    v ---- w ---- x     t.1
-	       |\___     ___/|
-		   |    \   /    |
-		   |     \ /     |
-		   y ---- z     t.2
+    t ---- z      x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y ---- w ---- v
 
 
