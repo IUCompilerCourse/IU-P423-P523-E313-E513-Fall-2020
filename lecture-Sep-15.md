@@ -65,8 +65,8 @@ Initial state:
 
     {}     {}     {}
     t ---- z      x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y ---- w ---- v
            {}     {}    {}
@@ -75,8 +75,8 @@ There's a tie amogst all vertices. Color t 0. Update saturation of adjacent.
 
     {}    {0}     {}
     t:0----z      x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y ---- w ---- v
            {}    {}     {}
@@ -85,8 +85,8 @@ Vertex z is the most saturated. Color z 1. Update saturation of adjacent.
 
     {1}   {0}     {}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y ---- w ---- v
           {1}    {1}    {}
@@ -96,8 +96,8 @@ There is a tie between y and w. Color w 0.
 
     {1}   {0}     {0}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y ----w:0---- v
           {0,1}  {1}    {0}
@@ -106,8 +106,8 @@ Vertex y is the most saturated. Color y 2.
 
     {1}   {0,2}   {0}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y:2----w:0---- v
           {0,1}  {1,2}   {0}
@@ -116,8 +116,8 @@ Vertex x and v are the most saturated. Color v 1.
 
     {1}   {0,2}   {0}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y:2----w:0----v:1
           {0,1}  {1,2}   {0}
@@ -126,8 +126,8 @@ Vertex x is the most saturated. Color x 1.
 
     {1}   {0,2}   {0}
     t:0----z:1    x:1
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y:2----w:0----v:1
           {0,1}  {1,2}   {0}
@@ -223,8 +223,8 @@ Let's redo the coloring, fast-forwarding past the coloring of t and z.
 
     {1}   {0}     {}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
            y ---- w ---- v
           {1}    {1}    {}
@@ -235,8 +235,8 @@ whereas w is not move related. So we color y to 0.
 
     {1}   {0}     {}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
           y:0---- w ---- v
           {1}    {0,1}    {}
@@ -245,8 +245,8 @@ Next we color w to 2.
 
     {1}   {0,2}  {2}
     t:0----z:1    x
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
           y:0----w:2---- v
          {1,2}   {0,1}  {2}
@@ -257,8 +257,8 @@ that has already been colored. So we color x to 0.
 
     {1}   {0,2}  {2}
     t:0----z:1   x:0
-           |\___  |
-           |    \ |
+           |\_    |
+           |  \__ |
            |     \|
           y:0----w:2----v:0
          {1,2}   {0,1}  {2}
