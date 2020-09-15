@@ -202,3 +202,102 @@ Vertex x is the most saturated. Color x 1.
             addq %rbx, %rax
             jmp conclusion
 
+# Challenge: Move Biasing
+
+In the above output code there are two movq instructions that can be
+removed because their source and target are the same.  A better
+register allocation would have put t, v, x, and y into the same
+register, thereby removing the need for three of the movq
+instructions.
+
+Here is the *move-graph* for the example program.
+
+
+    t     z --- x
+     \_       _/ \_
+       \_   _/     \_
+         \ /         \
+		  y     w     v
+
+Let's redo the coloring, fast-forwarding past the coloring of t and z.
+
+    {1}   {0}     {}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+		   y ---- w ---- v
+		  {1}    {1}    {}
+
+There is a tie between y and w regarding saturation, but
+this time we note that y is move related to t, which has color 0,
+whereas w is not move related. So we color y to 0.
+
+    {1}   {0}     {}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+	      y:0---- w ---- v
+		  {1}    {0,1}    {}
+
+Next we color w to 2.
+
+    {1}   {0,2}  {2}
+    t:0----z:1    x
+	       |\___  |
+		   |    \ |
+		   |     \|
+	      y:0----w:2---- v
+         {1,2}   {0,1}  {2}
+
+Now x and v are equally saturated, but x is move related
+to y and z whereas v is not move related to any vertex
+that has already been colored. So we color x to 0.
+
+    {1}   {0,2}  {2}
+    t:0----z:1   x:0
+	       |\___  |
+		   |    \ |
+		   |     \|
+	      y:0----w:2----v:0
+         {1,2}   {0,1}  {2}
+
+Finally, we color v to 0.
+
+So we have the assignment:
+
+	v -> rbx
+	w -> rdx
+	x -> rbx
+	y -> rbx
+	z -> rcx
+	t -> rbx
+
+and generate the following code.
+
+    movq $1, %rbx
+    movq $42, %rdx
+    movq %rbx, %rbx
+    addq $7, %rbx
+    movq %rbx, %rbx
+    movq %rbx, %rcx
+    addq %rdx, %rcx
+    movq %rbx, %rbx
+    negq %rbx
+    movq %rcx, %rax
+    addq %rbx, %rax
+    jmp conclusion
+
+As promised, there are three trivial movq's that can
+be removed in patch-instructions.
+
+    movq $1, %rbx
+    movq $42, %rdx
+    addq $7, %rbx
+    movq %rbx, %rcx
+    addq %rdx, %rcx
+    negq %rbx
+    movq %rcx, %rax
+    addq %rbx, %rax
+    jmp conclusion
