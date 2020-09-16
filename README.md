@@ -49,7 +49,7 @@ a pull request. The book is at the following location on github:
 
 * September 10 [Notes](./lecture-Sep-10.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_cui0st1f): Register Allocation (Liveness Analysis, Build Interference Graph)
 
-* September 15 [Notes](./lecture-Sep-15.md): Register Allocation (Graph Coloring)
+* September 15 [Notes](./lecture-Sep-15.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_bhbvoxal): Register Allocation (Graph Coloring)
 
 **Office hours**
 
@@ -162,6 +162,11 @@ week late with a penalty of 10%.
 
 * **Assignment: Register Allocation. Due Sep. 21.**
 
+    Add register allocation to your compiler for the R1 language by
+    completing the exercises in Chapter 3 of the course notes.  If
+    there is a graduate student on your team, also complete the
+    challenge exercise in Chapter 3 by adding move biasing to your
+    register allocator.
 
 **Email Discussion Group:** on [Piazza](http://piazza.com/iu/fall2020/p423p523e313e513)
 
