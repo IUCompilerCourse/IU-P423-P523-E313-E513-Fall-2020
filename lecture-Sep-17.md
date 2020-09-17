@@ -221,10 +221,7 @@ A straightforward way to compile an `if` expression is to recursively
 compile the condition, and then use the `cmpq` and `je` instructions
 to branch on its Boolean result. Let's first focus in the `(if (< x 1) ...)`.
 
-    callq read_int
-    movq %rax, x
-    callq read_int
-    movq %rax, y
+    ...
     cmpq $1, x          ;; (< x 1)
     setl %al
     movzbq %al, tmp
@@ -303,3 +300,43 @@ program.
     outer_else:
         return (+ y 10);
 
+Notice that we've acheived both objectives.
+1. The condition of each `if` is a comparison.
+2. We have not duplicated the two branches of the outer `if`.
+
+
+A new function for compiling the condition expression of an `if`:
+
+explicate-pred : R2_exp x C1_tail x C1_tail -> C1_tail x var list
+
+    (explicate-pred #t B1 B2)  => B1
+    
+    (explicate-pred #f B1 B2)  => B2
+    
+    (explicate-pred (< atm1 atm2) B1 B2)  =>  if (< atm1 atm2)
+                                                goto l1;
+                                              else
+                                                goto l2;
+         where B1 and B2 are added to the CFG with labels l1 and l2.
+
+    (explicate-pred (if e1 e2 e3) B1 B2)   =>   B5
+         where we add B1 and B2 to the CFG with labels l1 and l2.
+               (explicate-pred e2 (goto l1) (goto l2))   =>  B3
+               (explicate-pred e3) (goto l1) (goto l2))  =>  B4
+               (explicate-pred e1 B3 B3)                 =>  B5
+
+explicate-tail : R2_exp -> C1_tail x var list
+
+    (explicate-tail (if e1 e2 e3))   =>   B3
+         where (explicate-tail e2) => B1
+               (explicate-tail e3) => B2
+               (explicate-pred e1 B1 B2) => B3
+
+
+explicate-assign : R2_exp -> var -> C1_tail -> C1_tail x var list
+
+    (explicate-assign (if e1 e2 e3) x B1)   =>   B4
+         where we add B1 to the CFG with label l1
+               (explicate-assign e2 x (goto l1))   =>   B2
+               (explicate-assign e3 x (goto l1))   =>   B3
+               (explicate-pred e1 B2 B3)           =>   B4
