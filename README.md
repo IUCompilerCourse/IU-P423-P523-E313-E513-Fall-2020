@@ -51,6 +51,8 @@ a pull request. The book is at the following location on github:
 
 * September 15 [Notes](./lecture-Sep-15.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_bhbvoxal): Register Allocation (Graph Coloring)
 
+* September 17 [Notes](./lecture-Sep-17.md): Booleans and Control Flow
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
