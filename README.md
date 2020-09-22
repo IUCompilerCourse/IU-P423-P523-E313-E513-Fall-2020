@@ -95,7 +95,7 @@ won't fail the class because your internet went out.
 
 * Assignments
 * Quizzes
-* Midterm Exam (in class)
+* Midterm Exam
 * Final Exam
 
 **Assignments:**
