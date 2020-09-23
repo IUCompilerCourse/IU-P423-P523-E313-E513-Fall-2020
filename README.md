@@ -45,13 +45,15 @@ a pull request. The book is at the following location on github:
 
 * September 3 [Notes](./lecture-Sep-3.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+3%2C+2020/1_sqpe15y2): Select Instructions, Assign Homes, Path Instructions, Print x86
 
-* September 8 [Notes](./lecture-Sep-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_vizyqbn0): Code Review
+* September 8 [Notes](./lecture-Sep-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_vizyqbn0): Code review of compiling integers and variables.
 
 * September 10 [Notes](./lecture-Sep-10.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+10%2C+2020/1_gk7ace03): Register Allocation (Liveness Analysis, Build Interference Graph)
 
 * September 15 [Notes](./lecture-Sep-15.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course/1_bhbvoxal): Register Allocation (Graph Coloring)
 
 * September 17 [Notes](./lecture-Sep-17.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+17%2C+2020/1_ana9y0v2): Booleans and Control Flow
+
+* September 22 [Notes](./lecture-Sep-22.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+22%2C+2020/1_edqiv033): Code review of register allocation.
 
 **Office hours**
 
