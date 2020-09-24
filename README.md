@@ -55,6 +55,8 @@ a pull request. The book is at the following location on github:
 
 * September 22 [Notes](./lecture-Sep-22.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+22%2C+2020/1_edqiv033): Code review of register allocation.
 
+* September 24 [Notes](./lecture-Sep-24.md): More x86, Explicate Control for R2
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
