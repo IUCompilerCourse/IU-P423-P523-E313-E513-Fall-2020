@@ -3,9 +3,9 @@
     bool ::= #t | #f
     cmp ::=  eq? | < | <= | > | >= 
     exp ::= int | (read) | (- exp) | (+ exp exp) | (- exp exp)
-       |  var | (let ([var exp]) exp)
-       | bool | (and exp exp) | (or exp exp) | (not exp) 
-       | (cmp exp exp) | (if exp exp exp) 
+        | var | (let ([var exp]) exp)
+        | bool | (and exp exp) | (or exp exp) | (not exp) 
+        | (cmp exp exp) | (if exp exp exp) 
     R2 ::= exp
     
 New things:

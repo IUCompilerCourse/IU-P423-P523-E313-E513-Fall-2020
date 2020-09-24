@@ -53,24 +53,24 @@ Output x86:
         (+ (+ x1 x2)
            42)))
        
-    _start:
-        callq	_read_int
+    start:
+        callq	read_int
         movq	%rax, %rbx
-        callq	_read_int
+        callq	read_int
         movq	%rax, %rcx
         addq	%rcx, %rbx
         movq	%rbx, %rax
         addq	$42, %rax
-        jmp _conclusion
+        jmp conclusion
 
-        .globl _main
-    _main:
+        .globl main
+    main:
         pushq	%rbp
         movq	%rsp, %rbp
         pushq	%rbx
         subq	$8, %rsp
-        jmp _start
-    _conclusion:
+        jmp start
+    conclusion:
         addq	$8, %rsp
         popq	%rbx
         popq	%rbp
