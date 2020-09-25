@@ -108,6 +108,7 @@ Organize into teams of 2-4 students. Assignments will be due bi-weekly
 on Mondays at 11:59pm. Teams that include one or more graduate
 students are required to complete the challenge exercises.
 
+Assignment descriptions are posted on Canvas.
 Turn in your assignments by creating a github repository and giving
 access to Jeremy (jsiek) and Caner (cderici).
 
@@ -142,37 +143,6 @@ Dec. 11.
 
 **Late assignment policy:** Assignments may be turned in up to one
 week late with a penalty of 10%.
-
-
-* **Assignment: Integers and Variables. Due Sep. 7.**
-
-    Implement a compiler for the R1 language by completing the
-    exercises in Chapter 2 of the course notes.
-    The compiler should be in a file named `compiler.rkt`
-    and it should include the following functions with exactly
-    these names:
-
-    * `uniquify`
-    * `remove-complex-opera*`
-    * `explicate-control`
-    * `select-instructions`
-    * `assign-homes`
-    * `patch-instructions`
-    * `print-x86`
-
-    If there is a graduate student on your team, also complete the
-    challenge exercises in Chapter 2, in which you implement a partial
-    evaluator for the R1 language. The pass should be named
-    ```partial-eval```.
-    
-
-* **Assignment: Register Allocation. Due Sep. 21.**
-
-    Add register allocation to your compiler for the R1 language by
-    completing the exercises in Chapter 3 of the course notes.  If
-    there is a graduate student on your team, also complete the
-    challenge exercise in Chapter 3 by adding move biasing to your
-    register allocator.
 
 **Email Discussion Group:** on [Piazza](http://piazza.com/iu/fall2020/p423p523e313e513)
 
