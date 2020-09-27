@@ -18,7 +18,7 @@
       [(Prim 'read '())
        (define r (read))
        (cond [(fixnum? r) r]
-             [else (error 'interp-R1 "expected an integer" r)])]
+             [else (error 'interp-R0 "expected an integer" r)])]
       [(Prim '- (list e))
        (define v (interp-exp e))
        (fx- 0 v)]
@@ -32,5 +32,3 @@
   (match p
     [(Program info e) (interp-exp e)]
     ))
-
-
