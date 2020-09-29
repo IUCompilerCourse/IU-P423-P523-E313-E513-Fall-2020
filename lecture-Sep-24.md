@@ -187,8 +187,7 @@ explicate-tail : R2_exp -> C1_tail x var list
 
 explicate-assign : R2_exp -> var -> C1_tail -> C1_tail x var list
 
-    (let ([x (if e1 e2 e3)])
-       ...)
+    (explicate-assign (Int n) x B1)  => (Seq (Assign (Var x) (Int n)) B1)
 
     (explicate-assign (if e1 e2 e3) x B1)   =>   B4
          where we add B1 to the CFG with label l1

@@ -53,13 +53,14 @@ Example:
             jmp outer_else
         inner_else:
             cmpq $2, x
+                            live after ??  {y} (union)
             je outer_then
             jmp outer_else
-        outer_then:
+        outer_then:           {y}
             movq y, %rax
             addq $2, %rax
             jmp conclusion
-        outer_else:
+        outer_else:           {y}
             movq y, %rax
             addq $10, %rax
             jmp conclusion
@@ -106,7 +107,7 @@ that just goto another block.
         if (eq? x8473 2)
            goto block8479;
         else
-           goto block8480;
+           goto block8480; // block8476
     block8481:
         if (eq? x8473 0)
            goto block8477;
@@ -153,8 +154,22 @@ Two passes:
            \   /                   \   /
              B6                      B6
 
+        B1    B2    B3         B1    B2    B3
+        |      \    /          B4     \    /
+        |       \  /            \      \  /
+        B4       B5*      =>     \      \/ 
+          \     /                 \     /
+           \   /                   \   /
+             B6                      B6
+
+
 # R3 Language (Tuples)
 
+    (define v (vector 1 2 #t)) ;; [1,2,#t] : (Vector Integer Integer Boolean)
+    (vector-ref v 0) ;; 1
+    (vector-ref v 1) ;; 2
+    (vector-set! v 0 5)       ;; [5,2,#t]
+    (vector-ref v 0) ;; 5
 
     type ::= Integer | Boolean | (Vector type+) | Void
     exp ::= ... 
@@ -177,8 +192,8 @@ Two passes:
 
 * Tuples may be aliased
 
-        (let ([t1 (vector 3 7)])
-          (let ([t2 t1])
+        (let ([t1 (vector 3 7)])                 ;;    t1 -> [42,7] <- t2 ***
+          (let ([t2 t1])                         ;;    t2 -> [3,7] XXX
             (let ([_ (vector-set! t2 0 42)])
               (vector-ref t1 0))))
 
@@ -187,30 +202,26 @@ Two passes:
         (vector-ref
           (let ([t (vector 3 7)])
             t)
+          0)  ;; 3
+
+        ;; Question: How is that different from integers?
+
+        (+
+          (let ([t 5])
+            t)
           0)
 
-## Garbage Collection
+        ;; Answer: Ok, consider this example in which (vector 3 7)
+        ;; is not returned from the `let`, but we can nevertheless
+        ;; refer to it through the vector bound to `x`.
 
-* Def. The *live data* are all of the tuples that might be accessed by
-  the program in the future. We can overapproximate this as all of the
-  tuples that are reachable, transitively, from the registers or
-  procedure call stack. We refer to the registers and stack
-  collectively as the *root set*.
+        (let ([x (vector (vector))])           ;; x ->    [ * ]
+          (+                                   ;;           |
+             (let ([t (vector 3 7)])           ;; t ->    [3,7]
+                (vector-set! x 0 t)
+                5) ;; 5
+             (vector-ref (vector-ref x 0) 0)) ;; 3
+        ;; 8
 
-* The goal of a garbage collector is to reclaim the data that is not
-  live.
 
-* We shall use a 2-space copying collector, using Cheney's algorithm
-  (BFS) for the copy.
 
-* Alternative garbage collection techniques:
-   * generational copy collectors
-   * mark and sweep
-   * reference counting + mark and sweep
-
-Overview of how GC fits into a running program.:
-
-0. Ask the OS for 2 big chunks of memory. Call them FromSpace and ToSpace.
-1. Run the program, allocating tuples into the FromSpace.
-2. When the FromSpace is full, copy the *live data* into the ToSpace.
-3. Swap the roles of the ToSpace and FromSpace and go back to step 1.
