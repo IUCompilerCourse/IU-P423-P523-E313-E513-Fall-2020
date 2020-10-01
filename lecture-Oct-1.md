@@ -40,7 +40,7 @@ Overview of how GC fits into a running program.:
            it to the back of the queue in the ToSpace, unless the tuple
            has already been copied.  Update the pointers in the
            processed tuple to the copies or the forwarding pointer.
-    * Draw Fig. 5.6
+    * Draw Fig. 5.7
 
 * An implementation of a garbage collector is in `runtime.c`.
 

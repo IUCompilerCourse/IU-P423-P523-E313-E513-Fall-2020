@@ -59,6 +59,8 @@ a pull request. The book is at the following location on github:
 
 * September 29 [Notes](./lecture-Sep-29.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+29%2C+2020/1_n9c7bzm4): Impact of branching on instruction selection and register allocation. Challenge: optmizing and removing jumps.
 
+* October 1 [Notes](./lecture-Oct-1.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+1%2C+2020/1_j9g6xli5): Garbage Collection: 2-space Copy Collector
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
