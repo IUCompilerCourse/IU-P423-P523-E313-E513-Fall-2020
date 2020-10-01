@@ -57,9 +57,7 @@ a pull request. The book is at the following location on github:
 
 * September 24 [Notes](./lecture-Sep-24.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+24%2C+2020/1_a3nbfe77): More x86, Explicate Control with Branching.
 
-* September 29 [Notes](./lecture-Sep-29.md): Impact of branching on
-  instruction selection and register allocation. Challenge: optmizing
-  and removing jumps.
+* September 29 [Notes](./lecture-Sep-29.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+September+29%2C+2020/1_n9c7bzm4): Impact of branching on instruction selection and register allocation. Challenge: optmizing and removing jumps.
 
 **Office hours**
 
