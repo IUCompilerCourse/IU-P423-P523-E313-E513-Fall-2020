@@ -61,6 +61,8 @@ a pull request. The book is at the following location on github:
 
 * October 1 [Notes](./lecture-Oct-1.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+1%2C+2020/1_j9g6xli5): Garbage Collection: 2-space Copy Collector
 
+* October 6 [Notes](./lecture-Oct-6.md), : Code review of booleans and control flow
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
