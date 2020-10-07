@@ -105,7 +105,7 @@ won't fail the class because your internet went out.
 
 * Assignments
 * Quizzes
-* Midterm Exam
+* Midterm Exam (October 23, Online as a Canvas Quiz)
 * Final Exam
 
 **Assignments:**
