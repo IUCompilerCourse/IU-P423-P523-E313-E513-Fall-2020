@@ -63,6 +63,8 @@ a pull request. The book is at the following location on github:
 
 * October 6 [Notes](./lecture-Oct-6.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+6%2C+2020/1_1yjdbvrg): Code review of booleans and control flow
 
+* October 8 [Notes](./lecture-Oct-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+8%2C+2020/1_r8jzdnu3): Tuples and Garbage Collection: the Compiler Passes
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
