@@ -65,7 +65,7 @@ a pull request. The book is at the following location on github:
 
 * October 8 [Notes](./lecture-Oct-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+8%2C+2020/1_r8jzdnu3): Tuples and Garbage Collection: the Compiler Passes
 
-* October 13 [Notes](./lecture-Oct-13.md): Functions
+* October 13 [Notes](./lecture-Oct-13.md): Functions and Efficient Tail Calls
 
 **Office hours**
 

@@ -61,7 +61,7 @@ function call.
 
 The `callq` instruction
 1. pushes the return address onto the stack
-2. jumps to the target label
+2. jumps to the target label or address (for indirect call)
 
 But there is more to do to make a function call:
 1. parameter passing
@@ -107,13 +107,13 @@ stack.
 |---------------|---------------|----------------|---------
 | 8(%rbp)       |               | return address | 
 | 0(%rbp)       |               | old rbp        |
-| -8(%rbp)      |               | callee-saved   |  Caller
+| -8(%rbp)      |               | callee-saved   |  Caller (e.g. map-vec)
 |  ...          |               |   ...          |
 | -8(j+1)(%rbp) |               | spill          |
 |  ...          |               |   ...          |
 |               | 8(%rbp)       | return address | 
 |               | 0(%rbp)       | old rbp        |
-|               | -8(%rbp)      | callee-saved   |  Callee
+|               | -8(%rbp)      | callee-saved   |  Callee (e.g. add1 as f)
 |               |  ...          |   ...          |
 |               | -8(j+1)(%rbp) | spill          |
 |               |  ...          |   ...          |
@@ -153,6 +153,12 @@ Example: the recursive call to `tail-sum` is a tail call.
           (tail-sum (- n 1) (+ n r))))
 
     (+ (tail-sum 5 0) 27)
+
+
+    (define (sum [n : Integer]) : Integer
+      (if (eq? n 0) 
+          0
+          (+ n (sum (- n 1))))) ;; not a tail call
 
 Because a tail call is the last thing to happen, we no longer need the
 caller's frame and can reuse that stack space for the callee's frame.
