@@ -67,7 +67,9 @@ a pull request. The book is at the following location on github:
 
 * October 13 [Notes](./lecture-Oct-13.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+13%2C+2020/1_8nm19wcy): Functions and Efficient Tail Calls
 
-* October 15 [Notes](./lecture-Oct-15.md): Compiling Functions, the Passes
+* October 15 [Notes](./lecture-Oct-15.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+15%2C+2020/1_hy383s9a): Compiling Functions, the Passes
+
+* October 22 [Notes](./lectures-Oct-22.md): Compiling Functions, Examples
 
 **Office hours**
 

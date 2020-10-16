@@ -123,7 +123,6 @@ Create a new helper function for function definitions.
 Again, it will be similar to the previous code for `Program`.
 
 
-
 ## Select Instructions
 
 ### `FunRef` becomes `leaq`
@@ -176,8 +175,10 @@ alternative:
 
 New helper function for function definitions.
 
-Treat `IndirectCallq` like `Callq`.
+`leaq` reads from the first argument and writes to the second.
 
+`IndirectCallq` and `TailJmp` read from their argument and you must
+assume they write to all the caller-saved registers.
 
 ## Build Interference Graph
 
@@ -185,7 +186,7 @@ New helper function for function definitions.
 
 Compute one interference graph per function.
 
-Spill vector-typed variables that are live during any function call.
+Spill vector-typed variables that are live during a function call.
 (Because our functions make trigger `collect`.) So add interference
 edges between those variables and the callee-saved registers.
 
