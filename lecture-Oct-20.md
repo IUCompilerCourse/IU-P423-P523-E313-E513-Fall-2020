@@ -31,15 +31,15 @@ after reveal-functions:
        (+ x10706 y10707))
        
     (define (main ) : Integer
-       (add10705 40 2))
+       ((fun-ref add10705) 40 2))
 
 after limit-functions
 
     (define (add10705  [x10706 : Integer] [y10707 : Integer]) : Integer
        (+ x10706 y10707))
        
-    (define (main ) : Integer
-       'add10705 40 2))
+    (define (main) : Integer
+       ((fun-ref add10705) 40 2))
 
 skipping expose allocation
 
@@ -49,7 +49,7 @@ after remove-complex-opera*
        (+ x10706 y10707))
        
     (define (main) : Integer
-       (let ([tmp10708 add10705])
+       (let ([tmp10708 (fun-ref add10705)])
          (tmp10708 40 2)))
 
 after explicate-control
@@ -57,11 +57,10 @@ after explicate-control
     (define (add10705  [x10706 : Integer] [y10707 : Integer]) : Integer
        add10705start:
           return (+ x10706 y10707);
-
     )
     (define (main) : Integer
         mainstart:
-           tmp10708 = add10705;
+           tmp10708 = (fun-ref add10705);
            (tmp10708 40 2)
     )
 
@@ -71,7 +70,7 @@ skipping uncover-locals
 
 after instruction selection
 
-    (define (add10705 ) : _
+    (define (add10705) : _
        add10705start:
           movq %rcx, x10706
           movq %rdx, y10707
@@ -81,7 +80,7 @@ after instruction selection
     )
     (define (main ) : _
         mainstart:
-           leaq 'add10705, tmp10708
+           leaq (fun-ref add10705), tmp10708
            movq $40, %rcx
            movq $2, %rdx
            tailjmp tmp10708
@@ -103,7 +102,7 @@ after allocate-registers
     )
     (define (main) : _
         mainstart:
-           leaq 'add10705, %rsi
+           leaq (fun-ref add10705), %rsi
            movq $40, %rcx
            movq $2, %rdx
            tailjmp %rsi
@@ -118,27 +117,17 @@ after patch instructions
           movq %rsi, %rax
           addq %rcx, %rax
           jmp add10705conclusion
-
-
-    )(define (main ) : _
+    )
+    (define (main ) : _
         mainstart:
-           leaq 'add10705, %rsi
+           leaq (fun-ref add10705), %rsi
            movq $40, %rcx
            movq $2, %rdx
            movq %rsi, %rax
            tailjmp %rax
-
-
      )
 
 after print-x86
-
-    _add10709start:
-        movq	%rcx, %rsi
-        movq	%rdx, %rcx
-        movq	%rsi, %rax
-        addq	%rcx, %rax
-        jmp _add10709conclusion
 
         .globl _add10709
         .align 16
@@ -146,18 +135,16 @@ after print-x86
         pushq	%rbp
         movq	%rsp, %rbp
         jmp	_add10709start
-
+    _add10709start:
+        movq	%rcx, %rsi
+        movq	%rdx, %rcx
+        movq	%rsi, %rax
+        addq	%rcx, %rax
+        jmp _add10709conclusion
     _add10709conclusion:
         popq	%rbp
         retq
-    _mainstart:
-        leaq	_add10709(%rip), %rsi
-        movq	$40, %rcx
-        movq	$2, %rdx
-        movq	%rsi, %rax
-        popq	%rbp
-        jmp	*%rax
-
+        
         .globl _main
         .align 16
     _main:
@@ -168,7 +155,13 @@ after print-x86
         callq	_initialize
         movq	_rootstack_begin(%rip), %r15
         jmp	_mainstart
-
+    _mainstart:
+        leaq	_add10709(%rip), %rsi
+        movq	$40, %rcx
+        movq	$2, %rdx
+        movq	%rsi, %rax
+        popq	%rbp
+        jmp	*%rax
     _mainconclusion:
         popq	%rbp
         retq
@@ -188,7 +181,8 @@ skipping shrink
 
 after uniquify:
 
-    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] [d8 : Integer] 
+    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] 
+                [d8 : Integer] 
                 [e9 : Integer] [f10 : Integer] [g11 : Integer] 
                 [h12 : Integer] [i13 : Integer]) : Integer
        i13)
@@ -198,8 +192,10 @@ after uniquify:
 
 after reveal-functions:
 
-    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] [d8 : Integer]
-                [e9 : Integer] [f10 : Integer] [g11 : Integer] 
+    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] 
+                [d8 : Integer]
+                [e9 : Integer] 
+                [f10 : Integer] [g11 : Integer] 
                 [h12 : Integer] [i13 : Integer]) : Integer
        i13)
        
@@ -209,7 +205,8 @@ after reveal-functions:
 
 after limit-functions:
 
-    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] [d8 : Integer] 
+    (define (m4 [a5 : Integer] [b6 : Integer] [c7 : Integer] 
+                [d8 : Integer] 
                 [e9 : Integer] 
                 [vec14 : (Vector Integer Integer Integer Integer)]   *****
                 ) : Integer
@@ -294,8 +291,8 @@ after instruction selection:
           movq %rsi, d8                       *****
           movq %r8, e9                        *****
           movq %r9, vec14                     *****
-          movq vec14, %r11                    *****
-          movq 32(%r11), %rax                 *****
+          movq vec14, %r11
+          movq 32(%r11), %rax
           jmp m4conclusion
     )
     (define (main) : _
@@ -463,7 +460,7 @@ after print x86
         movq	$774, %rsi
         movq	$773, %r8
         movq	%r12, %rax
-        addq	$16, %rsp                  *****
+        addq	$16, %rsp                  ***** conclusion of main
         popq	%r14                       *****
         popq	%rbx                       *****
         popq	%r12                       *****
@@ -510,4 +507,33 @@ after print x86
         popq	%r13
         popq	%rbp
         retq
+
+# Lambda: Lexically Scoped Functions
+
+
+## Example
+
+    (define (f [x : Integer]) : (Integer -> Integer)
+       (let ([y 4])
+          (lambda: ([z : Integer]) : Integer
+             (+ x (+ y z)))))
+
+    (let ([g (f 5)])
+      (let ([h (f 3)])
+        (+ (g 11) (h 15))))
+
+
+## Syntax
+
+concrete syntax:
+
+    exp ::= ... | (lambda: ([var : type]...) : type exp)
+    R5 ::= def* exp
+
+abstract syntax:
+
+    exp ::= ... | (Lambda ([var : type]...) type exp)
+    R5 ::= (ProgramDefsExp info def* exp)
+
+    (Let var exp exp)
 
