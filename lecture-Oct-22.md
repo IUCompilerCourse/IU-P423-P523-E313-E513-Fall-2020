@@ -31,52 +31,19 @@ abstract syntax:
 
 ## Interpreter for R5
 
-Figure 7.4: case for lambda, case for define (mcons), case for
-application, case for program (backpatching).
 
-    (define (interp-exp env)
-      (lambda (e)
-        (define recur (interp-exp env))
-        (verbose "R5/interp-exp" e)
-        (match e
-          ...
-          [`(lambda: ([,xs : ,Ts] ...) : ,rT ,body)
-           `(lambda ,xs ,body ,env)]
-          [`(,fun ,args ...)
-           (define fun-val ((interp-exp env) fun))
-           (define arg-vals (map (interp-exp env) args))
-           (match fun-val
-             [`(lambda (,xs ...) ,body ,lam-env)
-              (define new-env (append (map cons xs arg-vals) lam-env))
-              ((interp-exp new-env) body)]
-             [else (error "interp-exp, expected function, not" fun-val)])]
-          [else (error 'interp-exp "unrecognized expression")]
-          )))
+see `interp-R5.rkt`:
 
-    (define (interp-def env)
-      (lambda (d)
-        (match d
-          [`(define (,f [,xs : ,ps] ...) : ,rt ,body)
-           (mcons f `(lambda ,xs ,body ()))]
-          )))
-
-    (define (interp-R5 env)
-      (lambda (p)
-        (match p
-          [(or `(program (type ,_) ,defs ... ,body)
-               `(program ,defs ... ,body))
-           (let ([top-level (map (interp-def '()) defs)])
-             (for/list ([b top-level])
-               (set-mcdr! b (match (mcdr b)
-                      [`(lambda ,xs ,body ())
-                       `(lambda ,xs ,body ,top-level)])))
-         ((interp-exp top-level) body))]
-          )))
+* case for lambda, 
+* case for define (mcons), 
+* case for application, 
+* case for program (backpatching).
 
 ## Type Checker for R5
 
-The case for lambda.
+see `type-check-R5`:
 
+The case for lambda.
 
 ## Free Variables
 
@@ -89,4 +56,54 @@ Use above example to show examples of free variables.
 
 Figure 7.3 in book, diagram of g and h from above example.
 
+# Closure Conversion Pass (after reveal-functions)
 
+For lambda:
+
+    (lambda: (ps ...) : rt body)
+    ==>
+    (vector (function-ref name) fvs ...)
+
+and also generate a top-level function
+
+    (define (name [clos : _] ps ...)
+      (let ([fv_1 (vector-ref clos 1)])
+        (let ([fv_2 (vector-ref clos 2)])
+          ...
+          body')))
+        
+For application:
+
+    (e es ...)
+    ==>
+    (let ([tmp e'])
+      ((vector-ref tmp 0) tmp es' ...))
+
+## Example
+
+    (define (f (x : Integer)) : (Integer -> Integer)
+      (let ((y 4))
+         (lambda: ((z : Integer)) : Integer
+           (+ x (+ y z)))))
+
+     (let ((g ((fun-ref f) 5)))
+        (let ((h ((fun-ref f) 3)))
+           (+ (g 11) (h 15))))
+           
+    ==>
+    
+    (define (f (clos.1 : _) (x : Integer)) : (Vector ((Vector _) Integer -> Integer))
+       (let ((y 4))
+          (vector (fun-ref lam.1) x y)))
+          
+    (define (lam.1 (clos.2 : (Vector _ Integer Integer)) (z : Integer)) : Integer
+       (let ((x (vector-ref clos.2 1)))
+          (let ((y (vector-ref clos.2 2)))
+             (+ x (+ y z)))))
+             
+     (let ((g (let ((t.1 (vector (fun-ref f))))
+                ((vector-ref t.1 0) t.1 5))))
+        (let ((h (let ((t.2 (vector  (fun-ref f))))
+                   ((vector-ref t.2 0) t.2 3))))
+           (+ (let ((t.3 g)) ((vector-ref t.3 0) t.3 11))
+              (let ((t.4 h)) ((vector-ref t.4 0) t.4 15)))))
