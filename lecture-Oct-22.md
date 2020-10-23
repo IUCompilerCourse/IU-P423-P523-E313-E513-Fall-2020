@@ -1,6 +1,5 @@
 # Lambda: Lexically Scoped Functions
 
-
 ## Example
 
     (define (f [x : Integer]) : (Integer -> Integer)
@@ -26,22 +25,18 @@ abstract syntax:
     R5 ::= (ProgramDefsExp info def* exp)
 
 
-(stopped lecture here)
-
-
 ## Interpreter for R5
-
 
 see `interp-R5.rkt`:
 
 * case for lambda, 
-* case for define (mcons), 
 * case for application, 
+* case for define (mcons), 
 * case for program (backpatching).
 
 ## Type Checker for R5
 
-see `type-check-R5`:
+see `type-check-R5.rkt`:
 
 The case for lambda.
 
@@ -54,7 +49,7 @@ Use above example to show examples of free variables.
 
 ## Closure Representation
 
-Figure 7.3 in book, diagram of g and h from above example.
+Figure 7.2 in book, diagram of g and h from above example.
 
 # Closure Conversion Pass (after reveal-functions)
 

@@ -69,9 +69,9 @@ a pull request. The book is at the following location on github:
 
 * October 15 [Notes](./lecture-Oct-15.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+15%2C+2020/1_hy383s9a): Compiling Functions, the Passes
 
-* October 20 [Notes](./lecture-Oct-20.md): Compiling Functions, Examples, Start of Lambda
+* October 20 [Notes](./lecture-Oct-20.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+20%2C+2020/1_k0t1wmat): Compiling Functions, Examples, Start of Lambda
 
-* October 22 [Notes](./lecture-Oct-22.md): Lambdas and Closure Conversion
+* October 22 [Notes](./lecture-Oct-22.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+22%2C+2020/1_vlnmv3sj): Lambdas and Closure Conversion
 
 **Office hours**
 
