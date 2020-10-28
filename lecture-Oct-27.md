@@ -1,7 +1,7 @@
 # Code Review of Tuple & Garbage Collection
 
 Announcements:
-* Midterm exam on Friday
+* Midterm exam on Friday, available 7am to 11:59pm, 90 minutes.
 
 ## `type-check`
 
@@ -54,6 +54,7 @@ lower `(vector e1 ... en)` creation into:
           type))]
     ...))
 
+;; for/list, range
 (define (generate-n-vars n)
   (if (zero? n) '()
       (cons (gensym 'tmp) (generate-n-vars (sub1 n)))))
@@ -77,11 +78,12 @@ lower `(vector e1 ... en)` creation into:
   (expand-into-lets (duplicate '_ (length vars)) 
     (make-vector-set-exps vect 0 vars (cdr types)) vect types))
 
-;; use Racket's make-list instead
+;; use Racket's make-list instead, for/list
 (define (duplicate x n) 
   (if (zero? n) '()
       (cons x (duplicate x (sub1 n)))))
 
+;; for/list
 (define (make-vector-set-exps vect accum vars types)
   (if (empty? vars) '()
       (cons (Prim 'vector-set! (list vect (Int accum) (Var (car vars))))
@@ -112,7 +114,8 @@ in the `Program` info.
 
 ## `select-instructions`
 
-Lower each of the following forms to x86
+Lower each of the following forms to x86:
+
 * `vector-ref`
 * `vector-set!`
 * `allocate`
@@ -147,10 +150,95 @@ Lower each of the following forms to x86
 
 ## `build-interference`
 
+Variables of vector type that are live during a call to `collect` must
+be spilled. To ensure that, create interference edges with
+callee-saved registers.  (We already add edges to the caller-saved
+registers.)
 
+```
+(define (add-from-instr graph instr live-after types)
+  (match instr
+    [(Callq 'collect)
+     (for ([x live-after]) 
+       (if (list? (match-alist (Var x) types))  ;; is variable x a vector?, vector-type?
+         (for ([y (append caller-registers callee-registers)])
+           (add-edge! graph x y))
+         (for ([y caller-registers]) 
+           (add-edge! graph x y))))]
+    ...))
+```
 
 ## `allocate-registers`
 
+Spill vector-typed variables to the root stack.
 
+2 root stack spills
+3 regular spills
+
+How much space on root stack?  5 slots
+On the regular stack? 5 slots
+
+Two registers:
+0  int
+1  int
+------
+2  vector     0
+3  int        1
+4  int        2
+5  vector     3
+6  int        4
+```
+(define (assign-nat n type)
+  (let [(last-reg (sub1 (length reg-colors)))]
+    (cond [(<= n last-reg)
+           (Reg (rev-match-alist n reg-colors))]
+          [(list? type) ;; vector-type?
+           (Deref 'r15 (* 8 (add1 (- n last-reg))))]
+          [else
+           (Deref 'rbp (* (add1 (- n last-reg)) (- 8)))]
+          )))
+
+(define (generate-assignments locals colors)
+  (cond [(empty? locals) '()]
+        [else (match (car locals)
+                [`(,(Var v) . ,type)
+                 (cons `(,v . ,(assign-nat (match-alist v colors) type)) 
+                       (generate-assignments (cdr locals) colors))])]))
+```
 
 ## `print-x86`
+
+In the prelude, call the `initialize` function to set up the garbage
+collector.
+
+In the prelude and conclusion, add code for pushing and popping a
+frame for `main` to the root stack. Initialize all the slots in the
+frame to zero.
+
+```
+(define (make-main stack-size used-regs root-spills)
+  (let* ([extra-pushes (filter (lambda (reg)
+                                (match reg
+                                  [(Reg x) (index-of callee-registers x)]
+                                  [x false]))
+                              used-regs)]
+         [push-bytes (* 8 (length extra-pushes))]
+         [stack-adjust (- (round-stack-to-16 (+ push-bytes stack-size)) push-bytes)])
+    (Block '()
+      (append (list (Instr 'pushq (list (Reg 'rbp)))
+                    (Instr 'movq (list (Reg 'rsp) (Reg 'rbp))))
+              (map (lambda (x) (Instr 'pushq (list x))) extra-pushes) 
+              (list (Instr 'subq (list (Imm stack-adjust) (Reg 'rsp)))) 
+              (initialize-garbage-collector root-spills)
+              (list (Jmp 'start))))))
+
+(define (initialize-garbage-collector root-spills)
+  (list (Instr 'movq (list (Imm root-stack-size) (Reg 'rdi)))
+        (Instr 'movq (list (Imm heap-size) (Reg 'rsi)))
+        (Callq 'initialize)
+        (Instr 'movq (list (Global 'rootstack_begin) (Reg 'r15)))
+        (Instr 'movq (list (Imm 0) (Deref (Reg 'r15) 0))
+        ...
+        (Instr 'movq (list (Imm 0) (Deref (Reg 'r15) k))
+        (Instr 'addq (list (Imm root-spills) (Reg 'r15)))))
+```

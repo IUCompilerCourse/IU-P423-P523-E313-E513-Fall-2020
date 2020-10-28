@@ -75,7 +75,7 @@ a pull request. The book is at the following location on github:
 
 **Office hours**
 
-* Jeremy Siek (jsiek): Tuesdays 2-3pm, Thursdays 4:30-5:30pm.
+* Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
   Zoom Meeting ID: 949 1594 8290.
 
 * Caner Derici (cderici): Mondays 11am-12pm, Wednesdays 11am-12pm.
