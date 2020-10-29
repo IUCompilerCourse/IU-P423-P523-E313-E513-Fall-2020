@@ -73,6 +73,10 @@ a pull request. The book is at the following location on github:
 
 * October 22 [Notes](./lecture-Oct-22.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+22%2C+2020/1_vlnmv3sj): Lambdas and Closure Conversion
 
+* October 27 [Notes](./lecture-Oct-27.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+27%2C+2020/1_q6dmk6st): Code Review of Tuple & Garbage Collection
+
+* October 29 [Notes](./lecture-Oct-29.md): Closure Conversion, The Compiler Pass
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
