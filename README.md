@@ -75,7 +75,9 @@ a pull request. The book is at the following location on github:
 
 * October 27 [Notes](./lecture-Oct-27.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+27%2C+2020/1_q6dmk6st): Code Review of Tuple & Garbage Collection
 
-* October 29 [Notes](./lecture-Oct-29.md): Closure Conversion, The Compiler Pass
+* October 29 [Notes](./lecture-Oct-29.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+29%2C+2020/1_hm4ono61): Closure Conversion, The Compiler Pass
+
+* November 3 [Notes](./lecture-Nov-3.md): Dynamic Typing
 
 **Office hours**
 
