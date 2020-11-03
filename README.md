@@ -77,7 +77,7 @@ a pull request. The book is at the following location on github:
 
 * October 29 [Notes](./lecture-Oct-29.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+October+29%2C+2020/1_hm4ono61): Closure Conversion, The Compiler Pass
 
-* November 3 [Notes](./lecture-Nov-3.md): Dynamic Typing
+* November 3 [Notes](./lecture-Nov-3.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+3%2C+2020/1_pw8wgk8w): Dynamic Typing
 
 **Office hours**
 

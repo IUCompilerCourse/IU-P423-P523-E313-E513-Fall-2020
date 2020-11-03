@@ -6,15 +6,26 @@ Racket, in two stages.
    with the operations `inject` and `project` that convert a value
    of any other type to `Any` and back again. This language is R6.
 
+   (let ([x (inject (Int 42) 'Integer)])  ;; create an Any from an integer
+     (project x 'Integer) ;; extract the integer from the Any
+
+   (let ([x (inject (Bool #t) 'Boolean)])  ;; create an Any from an Boolean
+     (project x 'Integer) ;; extract the integer from the Any
+
 2. Create a new pass that translates from R7 to R6 that uses
    `Any` as the type for just about everying and that 
    inserts `inject` and `project` in lots of places.
+
+Example
+
+    (not (if (eq? (read) 1) #f 0))
+
 
 
 # The R6 Language: Any
 
     type ::= ... | Any
-    ftype ::= Integer | Boolean | (Vectorof Any) | (Any ... -> Any)
+    ftype ::= Integer | Boolean | (Vector Any ...) | (Vectorof Any) | (Any ... -> Any)
     exp ::= ... | (inject exp ftype) | (project exp ftype) |
           | (boolean? exp) | (integer? exp) | (vector? exp)
           | (procedure? exp) | (void? exp)
@@ -26,6 +37,16 @@ determined at runtime.
 * type checking R6
 
 * interpreting R6
+
+Another example:
+
+    (let ([v (inject (vector (inject 42 Integer)) 
+                     (Vector Any))])
+       (let ([w (project v (Vector Any))])
+          (let ([x (vector-ref w 0)])
+             (project x Integer))))
+
+
 
 ## Compiling R6
 
@@ -57,19 +78,27 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
         (project e ty)
         ===>
         (let ([tmp e])
-          (if (eq? (tag-of-any tmp) tagof(ty))
+          (if (eq? (tag-of-any tmp) tag)
               (value-of-any tmp ty)
               (exit))))
+              
+        where tag is tagof(ty)
 
   If `ty` is a function or vector, you also need to check the vector
   length or procedure arity. Those two operations be added as two new
-  primitives.
+  primitives. Use the primitives:
+  
+  `vector-length`
+  `procedure-arity`
+
 
 * Compile `Inject` to `make-any`
 
         (inject e ty)
         ===>
-        (make-any e tagof(ty))
+        (make-any e tag)
+
+        where tag is the result of tagof(ty)
 
 * Abstract syntax for the new forms:
   
@@ -80,6 +109,12 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
 
 
 ### Reveal Functions
+
+Old way:
+
+    (Var f)
+    ===>
+    (FunRef f)
 
 To support `procedure-arity`, we'll need to record the arity of a
 function in `FunRefArity`.
@@ -115,7 +150,7 @@ Add case for `AllocateClosure`.
 
 * `(Prim 'make-any (list e (Int tag)))`
 
-  For T an Integer or Boolean: (Void too?)
+  For tag of an Integer or Boolean: (Void too?)
 
         (Assign lhs (Prim 'make-any (list e (Int tag)))
         ===>
@@ -125,7 +160,7 @@ Add case for `AllocateClosure`.
 
   where `3` is the length of the tag.
 
-  For other types:
+  For other types (vectors and functions):
 
         (Assign lhs (Prim 'make-any (list e (Int tag))))
         ===>
@@ -161,10 +196,13 @@ Add case for `AllocateClosure`.
         andq e', lhs
 
   where `7` is the binary number `111`.
-  
+  Instead: precompute the `11111....111000` instead of doing the movq 7 and notq
+
+------ finished here
+
 * `(Exit)`
 
-        (assign lhs (exit))
+        (Assign lhs (Exit))
         ===>
         movq $-1, %rdi
         callq exit
