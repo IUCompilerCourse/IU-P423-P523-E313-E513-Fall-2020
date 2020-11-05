@@ -48,7 +48,7 @@ Another example:
 
 
 
-## Compiling R6
+# Compiling R6
 
 The runtime representation of a value of type `Any` is a 64 bit value
 whose 3 least-significant bits (right-most) encode the runtime type,
@@ -69,7 +69,7 @@ address. All our values are 8-byte aligned, so we don't need the
 bottom 3 bits. To obtain the address from an `Any` value, just write
 000 to the rightmost 3 bits.
 
-### Shrink
+## Shrink
 
 * Compiling `Project` to `tag-of-any`, `value-of-any`, and `exit`.
 
@@ -108,7 +108,7 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
              | (Exit)
 
 
-### Reveal Functions
+## Reveal Functions
 
 Old way:
 
@@ -126,27 +126,27 @@ function in `FunRefArity`.
 Which means when processing the `ProgramDefs` form, we need to build
 an alist mapping function names to their arity.
 
-### Closure Convertion
+## Closure Convertion
 
 To support `procedure-arity`, we use a special purpose
 `Closure` form instead of the primitive `vector`,
 both in the case for `Lambda` and `FunRefArity`.
 
-### Expose Allocation
+## Expose Allocation
 
 Add a case for `Closure` that is similar to the one for `vector`
 except that it uses `AllocateClosure` instead of `Allocate`, so that
 it can pass along the arity.
 
-### Remove Complex Operands
+## Remove Complex Operands
 
 Add case for `AllocateClosure`.
 
-### Explicate Control
+## Explicate Control
 
 Add case for `AllocateClosure`.
 
-### Instruction Selection
+## Instruction Selection
 
 * `(Prim 'make-any (list e (Int tag)))`
 
@@ -198,40 +198,6 @@ Add case for `AllocateClosure`.
   where `7` is the binary number `111`.
   Instead: precompute the `11111....111000` instead of doing the movq 7 and notq
 
------- finished here
 
-* `(Exit)`
+To be continued next lecture...
 
-        (Assign lhs (Exit))
-        ===>
-        movq $-1, %rdi
-        callq exit
-
-* `(Assign lhs (AllocateClosure len ty arity))`
-
-  Treat this just like `Allocate` except that you'll put
-  the `arity` into the tag at the front of the vector.
-  Use bits 57 and higher for the arity.
-
-* `(Assign lhs (Prim 'procedure-arity (list e)))`
-
-  Extract the arity from the tag of the vector.
-  
-        (Assign lhs (Prim 'procedure-arity (list e)))
-        ===>
-        movq e', %r11
-        movq (%r11), %r11
-        sarq $57, %r11
-        movq %r11, lhs'
-
-* `(Assign lhs (Prim 'vector-length (list e)))`
-
-  Extract the length from the tag of the vector.
-
-        (Assign lhs (Prim 'vector-length (list e)))
-        ===>
-        movq e', %r11
-        movq (%r11), %r11
-        andq $126, %r11           // 1111110
-        sarq $1, %r11
-        movq %r11, lhs'
