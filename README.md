@@ -79,7 +79,7 @@ a pull request. The book is at the following location on github:
 
 * November 3 [Notes](./lecture-Nov-3.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+3%2C+2020/1_pw8wgk8w): Dynamic Typing
 
-* November 5 [Notes](./lecture-Nov-5.md): Dynamic Typing, continued
+* November 5 [Notes](./lecture-Nov-5.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+5%2C+2020/1_4jkvtqka): Dynamic Typing, continued
 
 **Office hours**
 
