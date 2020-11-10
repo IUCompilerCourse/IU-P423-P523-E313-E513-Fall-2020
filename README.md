@@ -81,6 +81,8 @@ a pull request. The book is at the following location on github:
 
 * November 5 [Notes](./lecture-Nov-5.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+5%2C+2020/1_4jkvtqka): Dynamic Typing, continued
 
+* November 10 [Notes](./lecture-Nov-10.md): Code Review of Functions
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
