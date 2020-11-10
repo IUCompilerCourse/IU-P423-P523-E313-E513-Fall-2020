@@ -56,7 +56,10 @@ New auxiliary function `select-instr-def`.
 
 ## Uncover Live
 
-* Update `read-vars` and `write-vars`
+* Update `free-vars` to handle `FunRef`.
+
+* Update `read-vars` and `write-vars` to handle
+  `IndirectCallq`, `TailJmp`, and `leaq`.
 
 
 ## Build Interference
