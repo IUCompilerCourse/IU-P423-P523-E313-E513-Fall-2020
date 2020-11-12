@@ -83,7 +83,7 @@ a pull request. The book is at the following location on github:
 
 * November 10 [Notes](./lecture-Nov-10.md): Code Review of Functions
 
-* November 12 [Notes](./lecture-Nov-12.md): Optimizing Closures
+* November 12 [Notes](./lecture-Nov-12.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+12%2C+2020/1_nj17t942): Optimizing Closures
 
 **Office hours**
 

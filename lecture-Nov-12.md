@@ -17,7 +17,7 @@ Replace an application that has a `lambda` in the operator position
 with a `let` expression. (This is a particularly simple form of
 inlining.)
 
-    ((lambda (x) (+ x 1)) 3)
+    ((lambda: ([x : Integer]) : Integer (+ x 1)) 3)
 	
     ==>
 	
@@ -63,6 +63,21 @@ call instead of an indirect call.
           (let ([f0 (Closure 1 (list (fun-ref lambda1) y8))])
              ((fun-ref lambda1) f0 21))))
 
+
+When this optimization doesn't apply:
+
+Don't know which lambda flows into the application.
+
+    (let ([f (if (eq? (read) 0) 
+                 (lambda (x) (+ x 1)) 
+                 (lambda (y) (+ y 2)))])
+      (f 2))
+
+    (let ([f (lambda (x) (+ x 1))]
+          [g (lambda (y) (+ y 2))])
+      (let ([vec (vector f g)])
+        ((vector-ref vec (read)) 2)))
+
 If you update your solution to the partial evaluation challenge
 assignment, then the known-call optimization will also work through
 multiple `let` bindings.
@@ -90,12 +105,13 @@ multiple `let` bindings.
 
     ==> optimize known calls
 
+    (define (lambda1  [fvs2 : (Vector _)] [x8 : Integer]) : Integer
+       (+ x8 1))
+       
     (define (main) : Integer
        (let ([f9 (Closure 1 (list (fun-ref lambda1)))])
           ((fun-ref lambda1) f9 41)))
 
-    (define (lambda1  [fvs2 : (Vector _)] [x8 : Integer]) : Integer
-       (+ x8 1))
 
 
 ## Eliminating Closures
@@ -138,31 +154,41 @@ Eliminate closures of well-known functions with no free variables.  e.g.
     (define (main) : Integer
        ((fun-ref add8) 40 2))
 
+An example in which the optimization does not apply:
+
+    (define (add [x : Integer] [y : Integer]) : Integer (+ x y))
+    (define (sub [x : Integer] [y : Integer]) : Integer (- x y))
+    
+    (+ (add 20 1)
+      (let ([f (if (eq? (read) 0) add sub)])
+        (f 20 1)))
+
+
 The act of eliminating a closure can affect the number of free
 variables in another closure, possibly enabling the elimination of
 that closure as well.
 
-(let ([f (lambda: ([y : Integer]) : Integer y)])
-  (let ([g (lambda: ([x : Integer]) : Integer (f x))])
-    (g 42)))
+    (let ([f (lambda: ([y : Integer]) : Integer y)])
+      (let ([g (lambda: ([x : Integer]) : Integer (f x))])
+        (g 42)))
 
-==> closure conversion and elimination on (lambda: ([y : Integer]) ...)
+    ==> closure conversion and elimination on (lambda: ([y : Integer]) ...)
 
-(define (lambda2 [y8 : Integer]) : Integer 
-    y8)
+    (define (lambda2 [y8 : Integer]) : Integer 
+        y8)
 
-(let ([g (lambda: ([x : Integer]) : Integer ((fun-ref lambda2) x))])
-  (g 42))
-  
-==> closure conversion and elimination on (lambda: ([x : Integer]) : Integer ...)
+    (let ([g (lambda: ([x : Integer]) : Integer ((fun-ref lambda2) x))])
+      (g 42))
 
-(define (lambda2 [y8 : Integer]) : Integer 
-    y8)
+    ==> closure conversion and elimination on (lambda: ([x : Integer]) : Integer ...)
 
-(define (lambda4 [x0 : Integer]) : Integer
-   ((fun-ref lambda2) x0))
+    (define (lambda2 [y8 : Integer]) : Integer 
+        y8)
 
-((fun-ref lambda4) 42)
+    (define (lambda4 [x0 : Integer]) : Integer
+       ((fun-ref lambda2) x0))
+
+    ((fun-ref lambda4) 42)
 
 
 ## Algorithm for Closure Conversion and Closure Optimization
