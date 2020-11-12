@@ -83,6 +83,8 @@ a pull request. The book is at the following location on github:
 
 * November 10 [Notes](./lecture-Nov-10.md): Code Review of Functions
 
+* November 12 [Notes](./lecture-Nov-12.md): Optimizing Closures
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
