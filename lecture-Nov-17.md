@@ -60,10 +60,18 @@ eagerly, intersecting along the way with prior results.
     A->B->C->D->E           {(a,1),(b,2),(c,0),(d,3)}
     A->B->C->D->E->F        {(a,1),(b,2),(c,0),(d,3),(e,2)}
     A->B->C->D->E->F->C     {(a,1)}
+       = {(a,1),(b,2),(c,4),(d,3),(e,2)} /\ {(a,1),(c,0)}
     A->B->C->D->E->F->C->D  {(a,1),(b,2)}
+       = {(a,1),(b,2)} /\ {(a,1),(b,2),(c,0)}
     ...C->D->E->F->C->D->E  {(a,1),(b,2),(d,3))}
+       = {(a,1),(b,2),(d,3)} /\ {(a,1),(b,2),(c,0),(d,3)}
     ...D->E->F->C->D->E->F  {(a,1),(b,2),(d,3))}
+       = {(a,1),(b,2),(c,4)(d,3))} /\ {(a,1),(b,2),(c,0),(d,3),(e,2)}
     ...E->F->C->D->E->F->C  {(a,1)}
+       = {(a,1),(b,2),(c,4)(d,3))} /\ {(a,1)}
+
+We got the same answer for P_C, so going around the loop again isn't
+going to change the results.
 
 Informal Global Analysis Algorithm For Constant Propagation & Folding
 
@@ -77,7 +85,18 @@ Informal Global Analysis Algorithm For Constant Propagation & Folding
 ## Generalization to other Static Analysis Problems
 
 * An "transfer" function f that maps a node and an input pool to an
-  output pool. For example,
+  output pool. Recall the example program:
+
+        A:  a = 1
+        B:  c = 0
+        for i = 1...10 {
+          C: b = 2
+          D: d = a + b
+          E: e = b + c
+          F: c = 4
+        }
+
+  The transfer function for constant propagation for this program is:
 
         f(A,S) = {(a,1)} U (S - a)
         f(B,S) = {(c,0)} U (S - c)
@@ -99,23 +118,22 @@ Informal Global Analysis Algorithm For Constant Propagation & Folding
 
         a <= b iff a /\ b = a
 
-* The transfer functions must be homomorphisms. (Kildall)
+* The transfer functions must be monotonic.
 
-        f(N, X /\ Y) = f(N, X) /\ (N, Y)
+        X <= Y --> f(N,x) <= f(N,y)
 
-  Also, we say f is distributive.
-
-  We can relax this requirement slightly:
+    which implies that taking the meet "early" gives you correct
+    but possibly less precise results.
 
         f(N, X /\ Y) <= f(N, X) /\ f(N, Y)
 
-  and also restate it as monotonicity:
+    If the transfer function is distributive
 
-        x <= y --> f(x) <= f(y)
+        f(N, X /\ Y) = f(N, X) /\ (N, Y)
 
-  When distributive, applying the meet "early" doesn't lose precision.
+    then applying the meet "early" doesn't lose precision.
 
-* For termination, need lattice to have finite descending chains.
+* For termination, the lattice needs to have finite descending chains.
 
 ## Common Subexpression Elimination
 
@@ -135,10 +153,10 @@ Example:
 Need to keep track of which expressions are equivalent,
 i.e., we need to track equivalence classes of expressions.
 
-    P_T = {}
-    P_U = { a | b | a+b,r }
-    P_V = { a | b | a+b, r | x | r+x, s }
-    P_W = { a | b | a+b, r | x | r+x, s, (a + b) + x, t }
+    P_T = { a | b | x }
+    P_U = { a | b | x | a+b, r }
+    P_V = { a | b | x | a+b, r | r+x, s }
+    P_W = { a | b | x | a+b, r | r+x, s, (a + b) + x, t }
 
 The transfer function for common subexpression elimination:
 
@@ -147,7 +165,7 @@ For each subexpression e in the node N:
    * If e is already in an equiv. class, then it is redundant.
    * If not, create a new class in P with singleton e.
    * If node N is an assignment d = e, remove from P
-     all expressions containing d. For each expression e' in P  
+     all expressions containing d. For each expression e' in P
      that contains e, create e'' by replacing e with d, and place e''
      in the class of e'.
 
@@ -166,10 +184,8 @@ beginning. Flip edges to have it work forwards.
 
 The transfer function is:
 
-    If d := e in N,
-       P <- P - {e| d in e }
-    For each e in N,
-       P <- P U {e} 
+    If N is d := e,
+       P <- (P - {e'| d in e' }) U {e' | e' in e} 
 
 The meet operation is set union.
 
@@ -185,11 +201,11 @@ Worklist Algorithm:
       Apply the transfer function.
       Place its successors who changed in the worklist.
 
-Speeding up the ordering:
+To speed up the ordering:
 
-Form the condensation graph by collapsing strongly-connected components.
+1. Form the condensation graph by collapsing strongly-connected components.
 
-Process the condensation graph in topological order.
-For each component, run the worklist algorithm to a fixed point.
+2. Process the condensation graph in topological order.  For each
+   component, run the worklist algorithm to a fixed point.
 
 
