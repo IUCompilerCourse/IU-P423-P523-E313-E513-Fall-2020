@@ -120,7 +120,7 @@ Informal Global Analysis Algorithm For Constant Propagation & Folding
 
 * The transfer functions must be monotonic.
 
-        X <= Y --> f(N,x) <= f(N,y)
+        X <= Y --> f(N,X) <= f(N,Y)
 
     which implies that taking the meet "early" gives you correct
     but possibly less precise results.
