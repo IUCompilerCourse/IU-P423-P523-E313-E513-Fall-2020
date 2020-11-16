@@ -184,8 +184,8 @@ beginning. Flip edges to have it work forwards.
 
 The transfer function is:
 
-    If N is d := e,
-       P <- (P - {e'| d in e' }) U {e' | e' in e} 
+    If N is x := e,
+       P <- (P - {e'| e' in P, x in e' }) U {e' | e' in e} 
 
 The meet operation is set union.
 
