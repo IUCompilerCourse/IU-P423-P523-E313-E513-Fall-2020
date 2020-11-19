@@ -2,7 +2,7 @@
 
 References:
 
-  * A Unified Appraoch to Global Program Optimization
+  * A Unified Approach to Global Program Optimization
     by Gary A. Kildall, POPL 1973.
     Gary's Ph.D. thesis at U.W.
     He is also known for the CP/M operating system that was an
@@ -25,23 +25,84 @@ Analyses and Optimizations:
       F: c = 4
     }
 
+Hasse Diagram, Finite Descending Chains
+
+   {(a,...), (b,...), (c,...), (d,...), (e, ...) }   (5 pairs)
+     |
+     ...
+     |
+  {(a,1),(b,2)}
+     |
+  {(a,1)}
+      \
+       {}
+
+Peel one iteration:
+
+    A:  a = 1
+    B:  c = 0
+    i = 1
+      C: b = 2
+      D: d = 3
+      E: e = 2
+      F: c = 4
+    for i = 2...10 {
+      E: e = b + c
+    }
+
+Peel two iterations:
+
+    A:  a = 1
+    B:  c = 0
+    i = 1
+      C: b = 2
+      D: d = 3
+      E: e = 2
+      F: c = 4
+    i = 2
+      E: e = 6
+
+  {}
+a = 3
+  {(a,3)}
+if (eq? (read) 0) {
+     {(a,3)}
+  b = 5
+    {(a,3),(b,5)}
+} else {
+     {(a,3)}
+  b = 10
+    {(a,3),(b,10)}
+}
+   {(a,3),(b,5)} /\ {(a,3),(b,10)} = {(a,3)}
+c = b
+   {(a,3)}
+
 Consider every possible execution path, propagating constants along
 each path.  Then the analysis information P_N for a node N is the
 *intersection* of the information from all paths to that node.
 
 Let P^i_N be the information for the ith path from the entry node 
 up to but not including node N.
-Then P_N = Inter_i P^i_N.
 
-    A                       {}
-    A->B                    {(a,1)}
-    A->B->C                 {(a,1),(c,0)}
-    A->B->C->D             *{(a,1),(b,2),(c,0)}
-    A->B->C->D->E           {(a,1),(b,2),(c,0),(d,3)}
-    A->B->C->D->E->F        {(a,1),(b,2),(c,0),(d,3),(e,2)}
-    A->B->C->D->E->F->C     {(a,1),(b,2),(c,4),(d,3),(e,2)}
-    A->B->C->D->E->F->C->D *{(a,1),(b,2),(c,4),(d,3),(e,2)}
+P^3(C) = {(a,1),(c,0)}
+P^7(C) = {(a,1),(b,2),(c,4),(d,3),(e,2)}
+
+    A                         {}
+    A->B                      {(a,1)}
+    A->B->C                   {(a,1),(c,0)}
+    A->B->C->D               *{(a,1),(b,2),(c,0)}
+    A->B->C->D->E             {(a,1),(b,2),(c,0),(d,3)}
+    A->B->C->D->E->F          {(a,1),(b,2),(c,0),(d,3),(e,2)}
+    A->B->C->D->E->F->C       {(a,1),(b,2),(c,4),(d,3),(e,2)}
+    A->B->C->D->E->F->C->D   *{(a,1),(b,2),(c,4),(d,3),(e,2)}
+    A->B->C->D->E->F->C->D->E {(a,1),(b,2),(c,4),(d,3),(e,2)}
+    A->B->C->D->E->F->C->D->E->F {(a,1),(b,2),(c,4),(d,3),(e,6)}
     ...
+    ...
+                            ->D  *{...}
+
+Then P_N = Inter_i P^i_N.
 
 P_D = {(a,1),(b,2)}
 
@@ -69,6 +130,8 @@ eagerly, intersecting along the way with prior results.
        = {(a,1),(b,2),(c,4)(d,3))} /\ {(a,1),(b,2),(c,0),(d,3),(e,2)}
     ...E->F->C->D->E->F->C  {(a,1)}
        = {(a,1),(b,2),(c,4)(d,3))} /\ {(a,1)}
+    ...E->F->C->D->E->F->C->D {(a,1),(b,2)}
+       = {(a,1),(b,2)} /\ {(a,1),(b,2)}
 
 We got the same answer for P_C, so going around the loop again isn't
 going to change the results.
@@ -116,7 +179,11 @@ Informal Global Analysis Algorithm For Constant Propagation & Folding
    - The elements are partially ordered in a way that
      jives with the meet operation.
 
-        a <= b iff a /\ b = a
+        A <= B iff A /\ B = A
+
+        A subset or equal B
+        iff
+        A /\ B = A
 
 * The transfer functions must be monotonic.
 
@@ -197,8 +264,8 @@ Worklist Algorithm:
 
     Place entry node in the worklist.
     While the worklist is not empty:
-      Pop a none from the worklist
-      Apply the transfer function.
+      Pop a node from the worklist
+      Apply the transfer function for that node.
       Place its successors who changed in the worklist.
 
 To speed up the ordering:
