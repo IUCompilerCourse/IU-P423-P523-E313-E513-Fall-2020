@@ -89,6 +89,8 @@ a pull request. The book is at the following location on github:
 
 * November 19 [Notes](./lecture-Nov-19.md): Compiling Loops and Liveness Analysis via Dataflow
 
+* December 1 [Notes](./lecture-Dec-1.md): Assignment and Begin
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
