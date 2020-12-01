@@ -42,12 +42,13 @@ To extend the lifetime of variables, we can "box" them, that is, put
 them on the heap.
 
 If a variable is never on the LHS of a `set!`, then there is no need
-to box it. We can copy its value into a closure to extend its live.
+to box it. We can copy its value into a closure to extend its life.
 
 If a variable is not free in any `lambda`, then there is also no need
-to box it. We can translate `set!` into assignment in C_3.
+to box it, even if it is assigned-to. We can translate `set!` into
+assignment in C7.
 
-So in this example, we box `x` but not `y`, `z`, and `a`.
+So for this example, we box `x` but not `y`, `z`, and `a`.
 
     (let ([x 0])
       (let ([y 0])
@@ -102,9 +103,43 @@ Recipe for boxing a variable:
 
 ## Remove Complex Operands
 
-The `while`, `set!`, and `begin` expressions are all complex.
+The `while`, `set!`, and `begin` expressions are all complex,
+so they should be let-bound to temporary variables.
 Their subexpressions are allowed to be complex.
 
+
+    (let ([x0 10])
+      (let ([y1 0])
+        (+ (+ (begin (set! y1 (read)) x0)
+               (begin (set! x0 (read)) y1))
+           x0)))
+    ==>
+    (let ([x0 10])
+      (let ([y1 0])
+        (let ([tmp1 (begin (set! y1 (read)) x0)])         ;; GOOD!
+          (let ([tmp2 (begin (set! x0 (read)) y1)])
+            (+ (+ tmp1 tmp2)
+               x0)))))
+
+    or??
+    
+    (let ([x0 10])
+      (let ([y1 0])
+        (begin
+          (set! y1 (read))      ;;; WRONG!
+          (set! x0 (read))
+          (+ (+ x0 y1) x0))))
+
+
+    (rco-atom (Begin es body))
+    =
+    (values (Var tmp) 
+            (tmp . (Begin es^ body^)))
+
+    where
+    es^ = (map rco-exp es)
+    body^ = (rco-exp body)
+    
 
 ## Explicate Control
 
@@ -123,12 +158,8 @@ followed by the block.
 
     (explicate-effect (SetBang x e) cont)
     ==>
-    e^
+    (explicate-assign x e cont)
     
-where
-
-    e^ = (explicate-assign x e cont)
-
 ### Begin
     
     (explicate-effect (Begin es body) cont)
@@ -143,16 +174,31 @@ and `es'` is the reslult of applying `explicate-effect` to each
 expression in `es`, back-to-front, using `body'` as the initial
 continuation. (Hint: use `for/foldr`.)
 
+
+    (explicate-tail (Begin es body))
+    ===>
+    body^ = (explicate-tail body)
+    (for/foldr ([cont body^]) ([e es])
+       (explicate-effect e cont))
+
+
 ### Apply
 
     (explicate-effect (Call e es) cont)
     ==>
     (Seq (Call e es) (force cont))
 
-There are three new kinds of statements in C_7:
+
+There are three new kinds of statements in C7:
 1. `Call`
 2. `read`
 3. `vector-set!`
+
+### Plus (and other primitives besides read and vector-set!)
+
+    (explicate-effect (Prim '+ args) cont)
+    ===>
+    cont
 
 
 ## Select Instructions

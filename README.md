@@ -85,9 +85,9 @@ a pull request. The book is at the following location on github:
 
 * November 12 [Notes](./lecture-Nov-12.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+12%2C+2020/1_nj17t942): Optimizing Closures
 
-* November 17 [Notes](./lecture-Nov-17.md): Dataflow Analysis
+* November 17 [Notes](./lecture-Nov-17.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+17%2C+2020/1_h0iqmju7): Dataflow Analysis
 
-* November 19 [Notes](./lecture-Nov-19.md): Compiling Loops and Liveness Analysis via Dataflow
+* November 19 [Notes](./lecture-Nov-19.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+19%2C+2020/1_42fqjvwz): Compiling Loops and Liveness Analysis via Dataflow
 
 * December 1 [Notes](./lecture-Dec-1.md): Assignment and Begin
 
