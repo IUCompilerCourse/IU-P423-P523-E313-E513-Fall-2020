@@ -89,7 +89,9 @@ a pull request. The book is at the following location on github:
 
 * November 19 [Notes](./lecture-Nov-19.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+November+19%2C+2020/1_42fqjvwz): Compiling Loops and Liveness Analysis via Dataflow
 
-* December 1 [Notes](./lecture-Dec-1.md): Assignment and Begin
+* December 1 [Notes](./lecture-Dec-1.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+December+1%2C+2020/1_n2dmgkw1): Assignment and Begin
+
+* December 3: Review of Dynamic Typing (see notes for Nov. 3 and 5)
 
 **Office hours**
 
