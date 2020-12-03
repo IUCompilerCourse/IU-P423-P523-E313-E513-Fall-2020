@@ -6,17 +6,17 @@ Racket, in two stages.
    with the operations `inject` and `project` that convert a value
    of any other type to `Any` and back again. This language is R6.
 
-   (let ([x (inject (Int 42) 'Integer)])  ;; create an Any from an integer
-     (project x 'Integer) ;; extract the integer from the Any
+        (let ([x (inject (Int 42) 'Integer)])
+          (project x 'Integer)                 ;; result is 42
 
-   (let ([x (inject (Bool #t) 'Boolean)])  ;; create an Any from an Boolean
-     (project x 'Integer) ;; extract the integer from the Any
+        (let ([x (inject (Bool #t) 'Boolean)])
+          (project x 'Integer)                 ;; error!
 
 2. Create a new pass that translates from R7 to R6 that uses
    `Any` as the type for just about everying and that 
    inserts `inject` and `project` in lots of places.
 
-Example
+Example R7 program
 
     (not (if (eq? (read) 1) #f 0))
 
@@ -25,7 +25,8 @@ Example
 # The R6 Language: Any
 
     type ::= ... | Any
-    ftype ::= Integer | Boolean | (Vector Any ...) | (Vectorof Any) | (Any ... -> Any)
+    ftype ::= Integer | Boolean | (Vector Any ...) | (Vectorof Any)
+          | (Any ... -> Any)
     exp ::= ... | (inject exp ftype) | (project exp ftype) |
           | (boolean? exp) | (integer? exp) | (vector? exp)
           | (procedure? exp) | (void? exp)
@@ -107,6 +108,27 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
              | (ValueOf exp type)
              | (Exit)
 
+
+## Check Bounds
+
+Adapt `type-check-R6` by changing the cases for `vector-ref` and
+`vector-set!` when the vector argument has type `Vectorof T`.
+
+    (vector-ref e1 e2)
+    ===>
+    (let ([v e1'])
+      (let ([i e2'])
+        (if (< i (vector-length v))
+            (vector-ref v i)
+            (exit))))
+
+    (vector-set! e1 e2 e3)
+    ===>
+    (let ([v e1'])
+      (let ([i e2'])
+        (if (< i (vector-length v))
+            (vector-set! v i e3')
+            (exit))))
 
 ## Reveal Functions
 
