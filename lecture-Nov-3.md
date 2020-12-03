@@ -1,24 +1,26 @@
 
 We'll implement a dynamically-typed language called R7, a subset of
-Racket, in two stages.
+Racket.
+
+Example R7 program
+
+    (not (if (eq? (read) 1) #f 0))
+
+We'll implement the compiler for R7 in two stages.
 
 1. Extend our typed language with a new type `Any` that is equiped
    with the operations `inject` and `project` that convert a value
    of any other type to `Any` and back again. This language is R6.
 
-        (let ([x (inject (Int 42) 'Integer)])
-          (project x 'Integer)                 ;; result is 42
+        (let ([x (inject (Int 42) Integer)])
+          (project x Integer))                 ;; result is 42
 
-        (let ([x (inject (Bool #t) 'Boolean)])
-          (project x 'Integer)                 ;; error!
+        (let ([x (inject (Bool #t) Boolean)])
+          (project x Integer))                 ;; error!
 
-2. Create a new pass that translates from R7 to R6 that uses
-   `Any` as the type for just about everying and that 
+2. Create a new pass (at the beginning) that translates from R7 to R6
+   that uses `Any` as the type for just about everying and that
    inserts `inject` and `project` in lots of places.
-
-Example R7 program
-
-    (not (if (eq? (read) 1) #f 0))
 
 
 
@@ -85,12 +87,10 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
               
         where tag is tagof(ty)
 
-  If `ty` is a function or vector, you also need to check the vector
+  If `ty` is a function or vector (e.g. `(Vector Integer Boolean)`), 
+  you also need to check the vector
   length or procedure arity. Those two operations be added as two new
-  primitives. Use the primitives:
-  
-  `vector-length`
-  `procedure-arity`
+  primitives. Use the primitives: `vector-length`, `procedure-arity`.
 
 
 * Compile `Inject` to `make-any`
@@ -109,7 +109,7 @@ bottom 3 bits. To obtain the address from an `Any` value, just write
              | (Exit)
 
 
-## Check Bounds
+## Check Bounds (missing from book)
 
 Adapt `type-check-R6` by changing the cases for `vector-ref` and
 `vector-set!` when the vector argument has type `Vectorof T`.
@@ -213,12 +213,10 @@ Add case for `AllocateClosure`.
 
         (Assign lhs (ValueOf e ty))
         ==>
-        movq $7, lhs
-        notq lhs
+        movq $-8, lhs
         andq e', lhs
 
-  where `7` is the binary number `111`.
-  Instead: precompute the `11111....111000` instead of doing the movq 7 and notq
+  where -8 is `(bitwise-not (string->number "#b111"))`
 
 
 To be continued next lecture...

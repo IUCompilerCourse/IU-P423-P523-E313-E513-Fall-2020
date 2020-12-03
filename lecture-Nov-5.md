@@ -13,7 +13,7 @@
   the `arity` into the tag at the front of the vector.
   Use bits 57 and higher for the arity.
 
-        [(Assign lhs (Allocate len `(Vector ,ts ...)))
+        [(Assign lhs (AllocateClosure len `(Vector ,ts ...) arity))
          (define lhs^ (select-instr-arg lhs))
          ;; Add one quad word for the meta info tag
          (define size (* (add1 len) 8))
@@ -26,8 +26,9 @@
          (define ptr-tag
            (for/fold ([tag 0]) ([t (in-list ts)] [i (in-naturals 7)])
              (bitwise-ior tag (arithmetic-shift (b2i (root-type? t)) i))))
+         (define arity-tag ...)
          ;; Combine the tags into a single quad word
-         (define tag (bitwise-ior ptr-tag length-tag is-not-forward-tag))
+         (define tag (bitwise-ior arity-tag ptr-tag length-tag is-not-forward-tag))
          (list (Instr 'movq (list (Global 'free_ptr) (Reg tmp-reg)))
                (Instr 'addq (list (Imm size) (Global 'free_ptr)))
                (Instr 'movq (list (Imm tag) (Deref tmp-reg 0)))
