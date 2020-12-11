@@ -93,6 +93,10 @@ a pull request. The book is at the following location on github:
 
 * December 3: Review of Dynamic Typing (see notes for Nov. 3 and 5)
 
+* December 8 [Notes](./lecture-Dec-8.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+December+8%2C+2020/1_71h0sbk8): Code Review of Compiling Lambda
+ 
+* December 10 [Notes](./lecture-Dec-10.md), [Video](https://iu.mediaspace.kaltura.com/media/Compiler+Course%2C+December+10%2C+2020/1_b08zavdn): Review of Compiling Functions
+
 **Office hours**
 
 * Jeremy Siek (jsiek): Tuesdays and Thursdays 4:30-5:30pm.
