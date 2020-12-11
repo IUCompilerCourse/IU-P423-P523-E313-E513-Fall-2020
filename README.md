@@ -140,7 +140,7 @@ won't fail the class because your internet went out.
 * Assignments
 * Quizzes
 * Midterm Exam (October 23, Online as a Canvas Quiz)
-* Final Exam
+* Final Exam (December 15, Online as a Canvas Quiz)
 
 **Assignments:**
 
